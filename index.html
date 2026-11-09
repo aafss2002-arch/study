@@ -97,35 +97,62 @@ button{font-family:inherit;cursor:pointer;border:0}
 .wl h4{font-size:15px;color:var(--sand);margin-bottom:8px}
 .wi{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:10px 12px;margin-bottom:8px;font-size:14.5px;line-height:1.7}
 .wi b{color:#8FD6CB;font-weight:700}
+
+#home{position:relative;overflow:hidden;padding-top:0}
+.hero{position:relative;margin:0 -16px 6px;padding:22px 16px 18px;overflow:hidden}
+.hero svg.waves{position:absolute;left:0;right:0;bottom:-6px;width:100%;height:120px;opacity:.9;pointer-events:none}
+.hero svg.ant{position:absolute;left:14px;top:18px;width:62px;height:96px;opacity:.95}
+.hk,.ht,.hs{position:relative;z-index:1}
+.ht{white-space:nowrap;font-size:clamp(25px,7.6vw,40px)!important;margin:10px 0 6px!important}
+.hs{font-size:16px!important}
+.mode{flex-wrap:wrap}
+.mode .mb{flex-basis:100%;display:flex;align-items:center;gap:8px;margin-top:6px;padding-right:56px}
+.mode .mb div{flex:1;height:6px;border-radius:6px;background:#E8ECEF;overflow:hidden}
+.mode .mb div i{display:block;height:100%;width:0;background:var(--teal2);border-radius:6px}
+.mode .mb span{font-size:11.5px;color:var(--mute);white-space:nowrap}
+.mode.exam i{background:var(--navy)}
+.mode.exam{border:2px solid var(--gold)}
+.timer{font-weight:900;font-size:15px;color:#fff;background:rgba(255,255,255,.12);border-radius:10px;padding:3px 9px;min-width:58px;text-align:center;display:none}
+.timer.on{display:block}.timer.low{background:var(--coral)}
+.op.pick,.btn.pick{border-color:var(--navy);background:#E9EEF6}
+.op.pick i{background:var(--navy);border-color:var(--navy);color:#fff}
+#confetti{position:fixed;inset:0;pointer-events:none;z-index:20}
+.hero svg.ant{z-index:0}
+@media (max-width:385px){.hero svg.ant{opacity:.3}}
+.etime{color:#A9BCD0;font-size:14px;margin-top:-10px;margin-bottom:14px}
 @keyframes pop{0%{transform:scale(1)}40%{transform:scale(1.06)}100%{transform:scale(1)}}
 @keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 .pop{animation:pop .3s}.shake{animation:shake .3s}
 </style></head><body><div class="app">
 <section class="scr" id="home">
+<div class="hero">
+<svg class="ant" viewBox="0 0 62 96" xmlns="http://www.w3.org/2000/svg"><g stroke="#E9DCC4" stroke-width="3" stroke-linecap="round" fill="none"><line x1="31" y1="20" x2="31" y2="94"/><line x1="31" y1="20" x2="12" y2="94"/><line x1="31" y1="20" x2="50" y2="94"/><line x1="19" y1="66" x2="43" y2="66"/><line x1="23" y1="44" x2="39" y2="44"/></g><g stroke="#2A9D8F" stroke-width="2" fill="none" stroke-linecap="round"><path d="M18,10 A16,16 0 0 1 44,10"/><path d="M11,4 A26,26 0 0 1 51,4" opacity=".6"/></g><circle cx="31" cy="18" r="4.5" fill="#2A9D8F"/></svg>
 <div class="hk">مراجعة مادة · الدورة: متقدمة إشارة ض ص</div>
-<div class="ht">هوائيات<br>وانتشار الموجات</div>
+<div class="ht">هوائيات وانتشار الموجات</div>
 <div class="hs">جاوب، واعرف فورًا إذا كانت إجابتك صح</div>
+<svg class="waves" viewBox="0 0 800 140" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><g fill="none" stroke="#2A9D8F" stroke-width="1.6" opacity=".45"><path d="M-20,60 C120,20 240,100 400,60 S640,20 820,60" opacity="1.00"/><path d="M-20,69 C120,29 240,109 400,69 S640,29 820,69" opacity="0.90"/><path d="M-20,78 C120,38 240,118 400,78 S640,38 820,78" opacity="0.80"/><path d="M-20,87 C120,47 240,127 400,87 S640,47 820,87" opacity="0.70"/><path d="M-20,96 C120,56 240,136 400,96 S640,56 820,96" opacity="0.60"/><path d="M-20,105 C120,65 240,145 400,105 S640,65 820,105" opacity="0.50"/><path d="M-20,114 C120,74 240,154 400,114 S640,74 820,114" opacity="0.40"/><path d="M-20,123 C120,83 240,163 400,123 S640,83 820,123" opacity="0.30"/></g></svg>
+</div>
 <div class="bar"></div>
 <div class="best"><div><b id="bs">0%</b><span>أفضل نتيجة</span></div><div><b id="bk">0</b><span>أطول سلسلة صح</span></div><div><b id="dn">0</b><span>أسئلة حليتها</span></div></div>
 <div class="modes" id="modes"></div>
 <div class="foot">بالتوفيق للجميع · عبدالعزيز العنزي</div>
 </section>
 <section class="scr" id="play">
-<div class="top"><div class="tr"><button class="x" id="ex" aria-label="خروج">✕</button><div class="prog"><div id="pb"></div></div><div class="sc">⭐ <span id="pts">0</span></div><div class="streak" id="stk"></div></div>
+<div class="top"><div class="tr"><button class="x" id="ex" aria-label="خروج">✕</button><div class="prog"><div id="pb"></div></div><div class="timer" id="tm">20:00</div><div class="sc">⭐ <span id="pts">0</span></div><div class="streak" id="stk"></div></div>
 <div class="meta"><span id="tp"></span><span id="cnt"></span></div></div>
 <div class="body" id="qb"></div>
 <div class="check" id="chk"><button id="chkb">تحقق</button></div>
 </section>
 <section class="scr" id="end">
 <div class="ring"><svg viewBox="0 0 160 160"><circle cx="80" cy="80" r="70" fill="none" stroke="rgba(255,255,255,.12)" stroke-width="14"/><circle id="arc" cx="80" cy="80" r="70" fill="none" stroke="#2A9D8F" stroke-width="14" stroke-linecap="round"/></svg><b id="pc">0%</b></div>
-<div class="et" id="et"></div><div class="es" id="es"></div>
+<div class="et" id="et"></div><div class="es" id="es"></div><div class="etime" id="etm"></div>
 <div class="stats"><div><b id="s1">0</b><span>صحيحة</span></div><div><b id="s2">0</b><span>خاطئة</span></div><div><b id="s3">0</b><span>أطول سلسلة</span></div></div>
 <div class="eb"><button class="b1" id="rw">أعد الأسئلة اللي غلطت فيها</button><button class="b2" id="ra">أعد نفس القسم مرة ثانية</button><button class="b3" id="hm">القائمة الرئيسية</button></div>
 <div class="wl" id="wl"></div>
 </section>
 </div>
 <div class="fb" id="fb"><div class="fbi"><div class="fbt" id="fbt"></div><div class="fbm" id="fbm"></div><button class="go" id="go">التالي</button></div></div>
-<script>
+<canvas id="confetti"></canvas><script>
 const D={"qa": [{"t": "qa", "q": "ما تعريف الموجة؟", "a": "كمية كهربائية (التيار) أو مغناطيسية (المجال المغناطيسي) أو كهرومغناطيسية، <b>متغيرة مع الزمن أو المسافة</b>.", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "بماذا يُرمز للتردد؟ وما وحدة قياسه؟", "a": "يُرمز له بالرمز <b>F</b>، ووحدة قياسه <b>الهيرتز (Hz)</b>.", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "الكيلوهيرتز كم يساوي هيرتز؟", "a": "<b>1 كيلوهيرتز = 1000 هيرتز</b><br>1 ميجاهيرتز = 1,000,000 هيرتز = 1000 كيلوهيرتز<br>1 جيجاهيرتز = 1,000,000,000 هيرتز = 1000 ميجاهيرتز", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "ما أنواع الموجات؟ وما أنواع الموجات الأرضية؟", "a": "الموجات نوعان: <b>أرضية</b> و<b>سماوية</b>.<br>الأرضية ثلاث مركبات: <b>المباشرة</b> (من هوائي الإرسال إلى هوائي الاستقبال مباشرة) · <b>السطحية</b> (بمحاذاة سطح الأرض وتتأثر بالتضاريس) · <b>المنعكسة الأرضية</b> (تنعكس على سطح الأرض وتعود إلى هوائي الاستقبال).", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "ما تعريف الموجات السماوية؟", "a": "الموجات التي <b>تنتقل إلى أعلى وتعود إلى الأرض بفعل طبقات الأيونوسفير</b>.", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "ماذا يحدث للموجة الساقطة على طبقة الأيونوسفير؟", "a": "أحد ثلاثة أشياء: <b>تُمتص</b> في الأيونوسفير · <b>تخرج منه وتُفقد</b> في الفضاء الخارجي · <b>تنعكس وتنكسر</b> حتى تعود إلى سطح الأرض على مسافة بعيدة.", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "ما العوامل المؤثرة على انتشار الموجات السماوية؟", "a": "<b>درجة تركيز أشعة الشمس</b> · <b>مقدار التردد المرسل</b> · <b>مقدار زاوية الإرسال</b>.", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "يتوقف مدى الموجات السطحية على:", "a": "<b>مقدار التردد</b> · <b>نوع الهوائي</b> · <b>قوة الإشارة</b> · <b>طبيعة سطح الأرض</b>.", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "يبلغ ارتفاع الطبقة E:", "a": "<b>من 88 إلى 136 كم</b> (تعكس HF نهارًا، وتختفي عند منتصف الليل).", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "التردد فوق العالي يُرمز له بالرمز:", "a": "<b>UHF</b>.", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "تنقسم الهوائيات من حيث التردد إلى:", "a": "هوائيات <b>التردد المنخفض والمتوسط</b> (LF و MF) · هوائيات <b>التردد العالي</b> (HF) · هوائيات <b>التردد العالي جدًا والفائق العلو</b>.", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "ما هوائيات التردد العالي (HF)؟", "a": "<b>الهوائي السوطي</b> (ماركوني) · <b>الهوائي الثنائي</b> (هيرتز).", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "تنقسم الهوائيات من حيث الطول الموجي إلى:", "a": "<b>هوائيات الموجة الطويلة</b> (طول السلك عدة أطوال موجية) · <b>هوائي هيرتز</b> (نصف الطول الموجي) · <b>هوائي ماركوني</b> (ربع الطول الموجي).", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "تنقسم الهوائيات الميدانية (من حيث خصائصها الاتجاهية) إلى:", "a": "هوائيات <b>تشع في جميع الاتجاهات</b> مثل السوطية · <b>ثنائية الاتجاه</b> مثل الثنائية · <b>أحادية الاتجاه</b> مثل نصف المعيني.", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "من أنواع خطوط النقل:", "a": "<b>خط النقل المفرد</b> · <b>خط النقل الشريطي</b> · <b>الكيبل المحوري</b> · <b>الألياف البصرية</b>.", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "من مزايا خط الإرسال (النقل) المفرد:", "a": "<b>قليل التكاليف</b> · <b>سرعة التركيب</b>.", "topic": "أسئلة مركّز عليها"}, {"t": "qa", "q": "مما تتكون الألياف البصرية؟", "a": "ثلاث طبقات متحدة المحور: <b>الجزء المركزي (القلب)</b> · <b>الكسوة</b> · <b>جاكيت الحماية</b>.", "topic": "أسئلة مركّز عليها"}], "tf": [{"t": "tf", "q": "تربط خطوط الإرسال بين جهازي الإرسال والاستقبال في الأنظمة السلكية.", "ans": true, "fix": "", "topic": "أساسيات الموجات"}, {"t": "tf", "q": "من وسائل انتقال الإشارة الانتقال المباشر.", "ans": true, "fix": "", "topic": "أساسيات الموجات"}, {"t": "tf", "q": "تتكون الموجات الكهرومغناطيسية من مجالين متعامدين أحدهما كهربائي والآخر مغناطيسي.", "ans": true, "fix": "", "topic": "أساسيات الموجات"}, {"t": "tf", "q": "تنتشر الموجات الكهرومغناطيسية في الفراغ بسرعة (300) كم/ث.", "ans": false, "fix": "بسرعة <b>300,000 كم/ث</b> (سرعة الضوء تقريبًا).", "topic": "أساسيات الموجات"}, {"t": "tf", "q": "نصف دورة موجبة + نصف دورة سالبة = دورة كاملة.", "ans": true, "fix": "", "topic": "أساسيات الموجات"}, {"t": "tf", "q": "الطول الموجي هو كمية كهربائية أو مغناطيسية أو كهرومغناطيسية متغيرة مع الزمن أو المسافة.", "ans": false, "fix": "هذا تعريف <b>الموجة</b> لا الطول الموجي.", "topic": "أساسيات الموجات"}, {"t": "tf", "q": "التردد هو عدد الدورات الكاملة التي تصنعها الموجة في الدقيقة الواحدة.", "ans": false, "fix": "في <b>الثانية</b> الواحدة.", "topic": "التردد والطول الموجي"}, {"t": "tf", "q": "الطول الموجي هو المسافة التي تقطعها الموجة في زمن مقداره دورتين.", "ans": false, "fix": "في زمن مقداره <b>دورة واحدة</b>.", "topic": "التردد والطول الموجي"}, {"t": "tf", "q": "يرمز للتردد بالرمز C.", "ans": false, "fix": "يرمز له بالرمز <b>F</b>.", "topic": "التردد والطول الموجي"}, {"t": "tf", "q": "الطول الموجي = سرعة انتشار الموجات × التردد.", "ans": false, "fix": "الطول الموجي = سرعة الانتشار <b>÷</b> التردد.", "topic": "التردد والطول الموجي"}, {"t": "tf", "q": "الموجة المباشرة وهي التي تنتقل من هوائي الإرسال إلى هوائي الاستقبال مباشرة.", "ans": true, "fix": "", "topic": "الانتشار والعوامل المؤثرة"}, {"t": "tf", "q": "انعكاس الموجات وانكسارها وعودتها إلى الأرض يؤدي إلى نقل الإشارة لمسافة لا تستطيع الموجات الأرضية الوصول إليها.", "ans": true, "fix": "", "topic": "الانتشار والعوامل المؤثرة"}, {"t": "tf", "q": "كلما زادت درجة توصيل الأرض نقص مدى الموجة السطحية.", "ans": false, "fix": "كلما زادت درجة التوصيل <b>زاد</b> مدى الموجة السطحية.", "topic": "الانتشار والعوامل المؤثرة"}, {"t": "tf", "q": "تعتبر درجة توصيل الغابات بالنسبة للموجات السطحية مناسبة.", "ans": false, "fix": "الغابات <b>غير مستخدمة</b> في جدول التوصيل النسبي.", "topic": "الانتشار والعوامل المؤثرة"}, {"t": "tf", "q": "الصحراء بالنسبة لجدول التوصيل النسبي ضعيفة.", "ans": true, "fix": "", "topic": "الانتشار والعوامل المؤثرة"}, {"t": "tf", "q": "تتوقف مدى الموجات المباشرة على ارتفاع هوائي الإرسال فقط.", "ans": false, "fix": "على ارتفاع هوائي الإرسال <b>وهوائي الاستقبال</b> معًا.", "topic": "الانتشار والعوامل المؤثرة"}, {"t": "tf", "q": "مقدار التردد: يتناسب مدى الموجات السطحية تناسبًا عكسيًا مع تردد الموجات.", "ans": true, "fix": "", "topic": "الانتشار والعوامل المؤثرة"}, {"t": "tf", "q": "كلما زادت قوة الإشارة زاد مداها.", "ans": true, "fix": "", "topic": "الانتشار والعوامل المؤثرة"}, {"t": "tf", "q": "زيادة التردد يزيد من مسافة الإرسال في نطاق التردد المتوسط.", "ans": false, "fix": "في نطاق التردد <b>العالي</b> (HF) ما لم يتجاوز حدًا معينًا.", "topic": "الانتشار والعوامل المؤثرة"}, {"t": "tf", "q": "زاوية الإرسال الانطلاق: هي الزاوية التي يصنعها الشعاع مع الاتجاه الأفقي.", "ans": true, "fix": "", "topic": "الانتشار والعوامل المؤثرة"}, {"t": "tf", "q": "طبقة الأيونوسفير هي الطبقة التي نعيش داخلها.", "ans": false, "fix": "التي نعيش داخلها هي <b>التروبوسفير</b>.", "topic": "طبقات الجو والأيونوسفير"}, {"t": "tf", "q": "الطبقة (E) تختفي عند منتصف الليل.", "ans": true, "fix": "", "topic": "طبقات الجو والأيونوسفير"}, {"t": "tf", "q": "الطبقة (E) تعكس موجات (HF) منتصف الليل.", "ans": false, "fix": "تعكس موجات HF <b>أثناء النهار</b>، وتختفي عند منتصف الليل.", "topic": "طبقات الجو والأيونوسفير"}, {"t": "tf", "q": "يبلغ ارتفاع الطبقتان F1,F2 من 136 كم إلى 380 كم.", "ans": true, "fix": "", "topic": "طبقات الجو والأيونوسفير"}, {"t": "tf", "q": "تؤثر الطبقة (D) على الموجات بانعكاس محدود للترددات المنخفضة.", "ans": true, "fix": "", "topic": "طبقات الجو والأيونوسفير"}, {"t": "tf", "q": "الهوائي هو موصل أو سلك صمم بحيث يشع الطاقة الكهرومغناطيسية أو يجمعها أو يقوم بالعملين معًا.", "ans": true, "fix": "", "topic": "النطاقات والهوائيات"}, {"t": "tf", "q": "هوائي هيرتز حيث يبلغ طول سلك الهوائي نصف الطول الموجي.", "ans": true, "fix": "", "topic": "النطاقات والهوائيات"}, {"t": "tf", "q": "الهوائي السوطي (ماركوني) يستخدم في المحطات الثابتة والمتحركة مع أجهزة تعديل التردد.", "ans": true, "fix": "", "topic": "النطاقات والهوائيات"}, {"t": "tf", "q": "الهوائي الطبقي يستخدم في اتصالات الأقمار الصناعية.", "ans": true, "fix": "", "topic": "النطاقات والهوائيات"}, {"t": "tf", "q": "الهوائيات الميدانية المؤقتة هي الهوائيات التي يمكن عملها في الميدان في حالة تعطل الهوائي الأصلي.", "ans": true, "fix": "", "topic": "النطاقات والهوائيات"}, {"t": "tf", "q": "المهمة الرئيسية لخطوط النقل هي نقل الطاقة من مصادرها إلى جهاز آخر.", "ans": true, "fix": "", "topic": "خطوط النقل"}, {"t": "tf", "q": "يتميز الكيبل المحوري بقلة التقاط الضوضاء الخارجية.", "ans": true, "fix": "", "topic": "خطوط النقل"}, {"t": "tf", "q": "الكيبل المحوري يتركب أساسًا من موصلين متحدين في المحور.", "ans": true, "fix": "", "topic": "خطوط النقل"}], "sc": [{"t": "sc", "q": "يقدر التردد بوحدة:", "o": ["HZ", "M", "s/m", "F"], "c": [0], "note": "", "topic": "التردد والطول الموجي"}, {"t": "sc", "q": "يقاس الطول الموجي بـ:", "o": ["الميل", "الكيلو", "المتر أو القدم", "الهيرتز"], "c": [2], "note": "", "topic": "التردد والطول الموجي"}, {"t": "sc", "q": "للتحويل من وحدات صغيرة إلى وحدات كبيرة في معامل التحويل:", "o": ["×", "÷", "+"], "c": [1], "note": "وجاءت صح/خطأ: «للتحويل من كبير إلى صغير نضرب في معامل التحويل» ← <b>صح</b>.", "topic": "التردد والطول الموجي"}, {"t": "sc", "q": "درجة التوصيل في الموجات السطحية للتربة الصخرية:", "o": ["جيدة", "مناسبة", "ضعيفة", "ممتازة"], "c": [2], "note": "", "topic": "الانتشار والعوامل المؤثرة"}, {"t": "sc", "q": "يبلغ ارتفاع الطبقة (E):", "o": ["150 إلى 350 كم", "124 إلى 380 كم", "144 إلى 485 كم", "88 إلى 136 كم"], "c": [3], "note": "", "topic": "طبقات الجو والأيونوسفير"}, {"t": "sc", "q": "يبلغ ارتفاع الطبقة (D):", "o": ["من 32 إلى 871 كم", "من 48 إلى 88 كم", "من 150 إلى 380 كم", "من 220 إلى 477 كم"], "c": [1], "note": "", "topic": "طبقات الجو والأيونوسفير"}, {"t": "sc", "q": "النطاقات الترددية منها تردد منخفض جدًا يرمز له برمز النطاق بـ:", "o": ["B", "VLF", "ME", "XHF"], "c": [1], "note": "", "topic": "النطاقات والهوائيات"}, {"t": "sc", "q": "من أمثلة بعض الهوائيات العاملة في سلاح الإشارة:", "o": ["الهوائي XZ5800", "الهوائي المتحرك", "الهوائي المباشر", "هوائي متعدد القنوات RL-432"], "c": [3], "note": "", "topic": "النطاقات والهوائيات"}, {"t": "sc", "q": "من مزايا خط النقل المفرد:", "o": ["قليل التكاليف", "يتأثر بالظروف الطبيعية", "متزن كهربائيًا", "كثير التكاليف"], "c": [0], "note": "وجاءت صح/خطأ: «من مزايا خط النقل المفرد كثير التكاليف» ← <b>خطأ</b>.", "topic": "خطوط النقل"}, {"t": "sc", "q": "من مزايا خط النقل الشريطي:", "o": ["ذات حجم كبير ووزن ثقيل", "جاكيت الحماية", "لا يحتاج إلى عازل كهربائي", "سهل التصنيع"], "c": [3], "note": "", "topic": "خطوط النقل"}], "mc": [{"t": "mc", "q": "يتوقف مدى الموجات السطحية على عدة عوامل منها:", "o": ["الطول الموجي", "نوع الهوائي", "المسافة", "مقدار التردد", "طبيعة سطح الأرض"], "c": [1, 3, 4], "note": "", "topic": "الانتشار والعوامل المؤثرة"}, {"t": "mc", "q": "العوامل التي تؤثر على انتشار الموجات السماوية:", "o": ["نوع الهوائي", "مقدار التردد المرسل", "مقدار زاوية الإرسال", "درجة تركيز أشعة الشمس", "قوة الإشارة"], "c": [1, 2, 3], "note": "", "topic": "الانتشار والعوامل المؤثرة"}, {"t": "mc", "q": "من طبقات الغلاف الجوي:", "o": ["البرونوسفير", "الأيونوسفير", "الميكروسفير", "التروبوسفير", "الاستراتوسفير"], "c": [1, 3, 4], "note": "", "topic": "طبقات الجو والأيونوسفير"}, {"t": "mc", "q": "تتكون طبقة الأيونوسفير من عدة طبقات:", "o": ["الطبقة F", "الطبقة D", "الطبقة HF", "الطبقة E", "الطبقة F1, F2"], "c": [1, 3, 4], "note": "", "topic": "طبقات الجو والأيونوسفير"}, {"t": "mc", "q": "من أقسام الهوائيات من حيث التردد:", "o": ["هوائيات التردد العالي", "هوائيات التردد المنخفض جدًا", "هوائيات التردد المنخفض والمتوسط", "هوائيات التردد الأرضي", "هوائيات التردد العالي جدًا والفائق العلو"], "c": [0, 2, 4], "note": "", "topic": "النطاقات والهوائيات"}, {"t": "mc", "q": "تنقسم الهوائيات الميدانية من حيث خصائصها الاتجاهية إلى عدة أشكال:", "o": ["هوائيات أحادية الاتجاه", "هوائيات تشع في جميع الاتجاهات", "هوائيات التردد العالي", "هوائيات ثنائية الاتجاه", "هوائيات التردد المنخفض"], "c": [0, 1, 3], "note": "", "topic": "النطاقات والهوائيات"}, {"t": "mc", "q": "من أنواع خطوط النقل:", "o": ["الألياف البصرية", "خط النقل المتعدد", "خط النقل المفرد", "خط النقل الشعاعي", "خط النقل الشريطي"], "c": [0, 2, 4], "note": "", "topic": "خطوط النقل"}], "ph": [{"t": "tf", "q": "يحتوي صوت الإنسان العادي على سلسلة من الذبذبات المختلفة.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "الصوت هو الظاهرة الطبيعية التي تؤثر في الأذن البشرية فينتج الإحساس بالسمع.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "موجات الصوت هي حركة جزيئات الهواء الناتجة عن اهتزاز جسم ما.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "تردد الصوت هو عدد الذبذبات في الثانية أو مقلوب الزمن الدوري.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "يعتمد ارتفاع الصوت على شدة الصوت.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "لا يمكن للأذن أن تميز بين الأصوات الصادرة من مصادر مختلفة حتى لو كانت هذه الأصوات متساوية في التردد.", "ans": false, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "يمكن تمثيل منطقة (موجة) التضاغط قيعان ومنطقة (موجة) التخلخل قمم.", "ans": false, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "كلما كان الصوت حادًا كانت درجته منخفضة.", "ans": false, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "سرعة الصوت في الهواء العادي وفي درجة صفر مئوي (331) متر/الثانية.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "يسري الصوت بسرعة أسرع بالنسبة للضوء.", "ans": false, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "يتلاشى الصوت كلما ابتعد عن المصدر ويقوى كلما قرب من المصدر.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "الطاقة الصوتية هي القدرة التي تحملها الموجة الصوتية عند التردد المطلوب.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "تكون الطاقة الصوتية بين كل قمتين متتاليتين.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "ضم الكفين والتحدث فيهما يقطع الصوت ضعف المسافة.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "مدى تردد صوت الكلام من أهم العوامل التي تؤثر في تصميم وإنشاء المعدات الخطية.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "كلمة (ميجافون) تعني الصوت الضخم.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "مخترع التلفون هو العالم الإسكتلندي (إسكندر غراهام بل).", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "التليفون (الهاتف): هو وسيلة نقل كلام وذلك باستخدام التيار الكهربائي.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "عمل الميكرفون هو تحويل الطاقة الصوتية إلى كهربائية.", "ans": true, "fix": "", "note": "وجاءت صح/خطأ: «عمل السماعة هو لتحويل الطاقة الصوتية إلى طاقة كهربائية» ← <b>خطأ</b>.", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "في تلفون الأزرار كل رقم عبارة عن نغمتين بتردد واحد في وقت واحد تسمى النغمة المركبة.", "ans": false, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "تلفون القرص هو عبارة عن دائرة معزولة مرقمة بأرقام تبدأ من صفر إلى 9.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "تحتوي كل فترة زمنية على 8 أرقام للثانية.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "لزيادة عدد المشتركين يستخدم أكثر من مصفوفة وأكثر من مرحلة لإتمام الاتصال.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "كلما زادت عدد المراحل قل احتمال حدوث عائق المكالمة.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "tf", "q": "وحدة التحكم تحتوي على دوائر وبرامج للتحكم في وحدة التوصيل.", "ans": true, "fix": "", "note": "", "topic": "الصوت والهاتف"}, {"t": "sc", "q": "سرعة الصوت في الماء تساوي:", "o": ["(1432) متر/الثانية", "(4600) قدم/الثانية", "(4500) قدم/الثانية"], "c": [0], "note": "وجاءت صح/خطأ: «سرعة الصوت في الماء تساوي (1432) متر/الثانية» ← <b>صح</b>.", "topic": "الصوت والهاتف"}, {"t": "sc", "q": "طول الموجة يساوي:", "o": ["سرعة الصوت × الطول الموجي", "سرعة الصوت / التردد", "التردد × المسافة"], "c": [1], "note": "وجاءت صح/خطأ: «سرعة الصوت = طول الموجة / التردد» ← <b>خطأ</b>.", "topic": "الصوت والهاتف"}, {"t": "sc", "q": "البوق يقطع الصوت:", "o": ["ضعفين المسافة", "ثلاث أضعاف المسافة", "ضعف المسافة"], "c": [1], "note": "", "topic": "الصوت والهاتف"}, {"t": "sc", "q": "تتراوح الترددات الأساسية لصوت الكلام العادي بين:", "o": ["(100-300) ميجا هيرتز (MHz)", "(100-300) كيلو هيرتز (KHz)", "(100-300) هيرتز (Hz)"], "c": [2], "note": "", "topic": "الصوت والهاتف"}, {"t": "sc", "q": "كلمة (البوق) مشتقة من كلمة:", "o": ["فون", "تون", "نون"], "c": [0], "note": "", "topic": "الصوت والهاتف"}, {"t": "sc", "q": "نظرية التلفون هي:", "o": ["هي قصر المسافة في إرسال الأصوات", "هي القدرة التي تحملها الموجة", "تحويل الطاقة الصوتية الضعيفة إلى طاقة كهربائية"], "c": [2], "note": "", "topic": "الصوت والهاتف"}, {"t": "sc", "q": "من وظائف الملف التأثيري في التلفون:", "o": ["يزيد قيمة الجهد", "كثافة الوسط الناقل", "يبطئ سرعة الصوت"], "c": [0], "note": "", "topic": "الصوت والهاتف"}, {"t": "sc", "q": "يستعمل المكثف في التلفون:", "o": ["لتخفيض تيار دق الجرس المتغير AC", "لتحويل الطاقة الصوتية إلى كهربائية", "لتوليد التيار اللازم لدق الجرس"], "c": [0], "note": "وجاءت صح/خطأ: «عمل المكثف في التلفون لتخفيض تيار دق الجرس المتغير AC» ← <b>صح</b> · «وظيفة المولد اليدوي هي لتخفيض تيار دق الجرس المتغير (AC)» ← <b>خطأ</b>.", "topic": "الصوت والهاتف"}, {"t": "sc", "q": "تستخدم السنترالات:", "o": ["لعملية الفصل بين المشتركين", "لتحويل الطاقة الكهربائية إلى صوتية", "لعملية الربط بين المشتركين"], "c": [2], "note": "", "topic": "الصوت والهاتف"}, {"t": "mc", "q": "المسافة التي يستطيع أن يقطعها صوت الإنسان المتكلم لكي تتمكن الأذن من سماعها محدودة وتعتمد على الآتي:", "o": ["طاقة رئة المتكلم", "بعد المسافة", "قرب المسافة", "حاسية أذن المستمع", "لا شيء مما ذكر"], "c": [0, 3], "note": "وجاءت صح/خطأ: «المسافة التي يستطيع أن يقطعها صوت الإنسان العادي لكي تتمكن الأذن من سماعها غير محدودة» ← <b>خطأ</b>.", "topic": "الصوت والهاتف"}, {"t": "mc", "q": "ينتقل الصوت في الأوساط المادية التالية:", "o": ["الهواء", "الفراغ", "السوائل", "الجوامد", "كل ما ذكر"], "c": [0, 2, 3], "note": "وجاءت صح/خطأ: «الهواء هو أحد الأوساط المادية التي تنقل الصوت» <b>صح</b> · «الجوامد هي من أحد الأوساط المادية التي تنقل الصوت» <b>صح</b> · «من الأوساط الناقلة للصوت (الفراغ)» <b>خطأ</b>.", "topic": "الصوت والهاتف"}, {"t": "mc", "q": "تعتمد شدة الصوت على عدة عوامل:", "o": ["كثافة الوسط الذي ينتقل فيه الصوت", "التردد", "سعة الموجة والبعد عن مصدر الصوت", "ارتفاع الصوت"], "c": [0, 1, 2], "note": "", "topic": "الصوت والهاتف"}, {"t": "mc", "q": "من الأجزاء الرئيسية للتلفون:", "o": ["السماعة المستقبلة", "مجموعة الريش", "المكثف", "القرص ذو الأزرار", "فريم التوزيع"], "c": [0, 1, 2], "note": "وجاءت صح/خطأ: «من أجزاء التلفون السماعة المستقبلة» ← <b>صح</b>.", "topic": "الصوت والهاتف"}, {"t": "mc", "q": "من أجزاء السنترال:", "o": ["وحدة الإرسال", "وحدة التوصيل", "وحدة التحكم", "وحدة المواءمة", "الفريم الرئيسي"], "c": [1, 2, 3], "note": "وجاءت اختيارًا واحدًا: «من أجزاء السنترال» ← <b>وحدة التوصيل</b>.", "topic": "الصوت والهاتف"}, {"t": "mc", "q": "أنواع وحدات التوصيل:", "o": ["سويتشات القضبان المتعامدة", "وحدة المراقبة", "تبديل محتوى الفترات الزمنية", "وحدة إرسال الإشارات", "وحدة الإخلاء"], "c": [0, 2], "note": "", "topic": "الصوت والهاتف"}, {"t": "mc", "q": "من أنواع السنترالات الرئيسية:", "o": ["سنترالات تستخدم في الشبكات العامة", "نوع السنترال", "النغمة المركبة", "سنترالات تستخدم في الشبكات الخاصة", "تبادل المعلومات"], "c": [0, 3], "note": "", "topic": "الصوت والهاتف"}, {"t": "mc", "q": "أنواع الاتصال خلال شبكة التلفونات:", "o": ["الاتصال بين المشترك والسنترال المحلي", "وحدة التغذية", "الاتصال بين السنترالات الخارجية", "أجهزة هاتف", "(خيار غير مقروء)"], "c": [0, 2], "note": "", "topic": "الصوت والهاتف"}]};
 const L=['أ','ب','ج','د','هـ'];
 const MODES={qa:{n:'أسئلة مركّز عليها',d:'سؤال مباشر · اكشف الإجابة وقيّم نفسك',i:'؟'},
@@ -134,35 +161,51 @@ const MODES={qa:{n:'أسئلة مركّز عليها',d:'سؤال مباشر · 
  mc:{n:'اختر أكثر من إجابة',d:'الهوائيات وانتشار الموجات',i:'☰'},
  ph:{n:'الصوت والهاتف والسنترال',d:'صح وخطأ واختيارات',i:'☎'}};
 const $=s=>document.querySelector(s);
-let st={};const store={get(k,d){try{const v=localStorage.getItem('hw_'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('hw_'+k,JSON.stringify(v))}catch(e){}}};
-let wrongBank=store.get('wrong',[]);
-function key(q){return q.q}
+const store={get(k,d){try{const v=localStorage.getItem('hw_'+k);return v===null?d:JSON.parse(v)}catch(e){return d}},set(k,v){try{localStorage.setItem('hw_'+k,JSON.stringify(v))}catch(e){}}};
+let st={},timer=null;
+let wrongBank=store.get('wrong',[]),okBank=store.get('ok',[]);
+const key=q=>q.q;
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 function show(id){document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));$('#'+id).classList.add('on');window.scrollTo(0,0)}
+function modeBtn(cls,icon,title,desc,count,list,onclick){
+  const b=document.createElement('button');b.className='mode '+cls;
+  let bar='';if(list){const m=list.filter(q=>okBank.includes(key(q))).length,p=Math.round(m/list.length*100);
+    bar=`<div class="mb"><div><i style="width:${p}%"></i></div><span>أتقنت ${m} من ${list.length}</span></div>`}
+  b.innerHTML=`<i>${icon}</i><div class="tx"><b>${title}</b><span>${desc}</span></div><em>${count}</em>${bar}`;b.onclick=onclick;return b}
 function home(){
-  const m=$('#modes');m.innerHTML='';
-  Object.keys(MODES).forEach(k=>{const b=document.createElement('button');b.className='mode';b.innerHTML=`<i>${MODES[k].i}</i><div class="tx"><b>${MODES[k].n}</b><span>${MODES[k].d}</span></div><em>${D[k].length} سؤال</em>`;b.onclick=()=>start(D[k],MODES[k].n);m.appendChild(b)});
+  stopTimer();$('#fb').className='fb';const m=$('#modes');m.innerHTML='';
   const all=[...D.tf,...D.sc,...D.mc,...D.ph];
-  const a=document.createElement('button');a.className='mode all';a.innerHTML=`<i>★</i><div class="tx"><b>تحدي عشوائي</b><span>20 سؤالًا مخلوطة من كل الأقسام</span></div><em>20 سؤال</em>`;a.onclick=()=>start(shuffle(all).slice(0,20),'تحدي عشوائي');m.appendChild(a);
-  const w=document.createElement('button');w.className='mode wr';const wq=all.concat(D.qa).filter(q=>wrongBank.includes(key(q)));
-  w.innerHTML=`<i>↺</i><div class="tx"><b>أخطائي</b><span>الأسئلة اللي غلطت فيها سابقًا</span></div><em>${wq.length} سؤال</em>`;if(!wq.length)w.disabled=true;w.onclick=()=>start(shuffle(wq),'أخطائي');m.appendChild(w);
+  m.appendChild(modeBtn('exam','⏱','اختبار تجريبي','30 سؤالًا مخلوطة · 20 دقيقة · النتيجة في النهاية','30 سؤال',null,()=>startExam(all)));
+  Object.keys(MODES).forEach(k=>m.appendChild(modeBtn('',MODES[k].i,MODES[k].n,MODES[k].d,D[k].length+' سؤال',D[k],()=>start(D[k],MODES[k].n))));
+  m.appendChild(modeBtn('all','★','تحدي عشوائي','20 سؤالًا مخلوطة من كل الأقسام','20 سؤال',null,()=>start(shuffle(all).slice(0,20),'تحدي عشوائي')));
+  const wq=all.concat(D.qa).filter(q=>wrongBank.includes(key(q)));
+  const w=modeBtn('wr','↺','أخطائي','الأسئلة اللي غلطت فيها سابقًا',wq.length+' سؤال',null,()=>start(shuffle(wq),'أخطائي'));if(!wq.length)w.disabled=true;m.appendChild(w);
   $('#bs').textContent=store.get('best',0)+'%';$('#bk').textContent=store.get('bstreak',0);$('#dn').textContent=store.get('done',0);
   show('home');
 }
-function start(list,name){st={list:shuffle(list),i:0,score:0,streak:0,best:0,wrong:[],name};show('play');render()}
+function start(list,name,exam){st={list:exam?list:shuffle(list),i:0,score:0,streak:0,best:0,wrong:[],name,exam:!!exam,answers:[],t0:Date.now()};show('play');
+  $('#tm').classList.toggle('on',!!exam);$('.sc').style.display=exam?'none':'flex';$('#stk').style.display=exam?'none':'block';render()}
+function startExam(all){
+  const pick=(arr,n)=>shuffle(arr).slice(0,n);
+  const ph=shuffle(D.ph);const list=shuffle([...pick(D.tf,12),...pick(D.sc,6),...pick(D.mc,4),...ph.filter(q=>q.t==='tf').slice(0,4),...ph.filter(q=>q.t!=='tf').slice(0,4)]);
+  start(list,'اختبار تجريبي',true);
+  let left=20*60;const tm=$('#tm');const draw=()=>{tm.textContent=String(Math.floor(left/60)).padStart(2,'0')+':'+String(left%60).padStart(2,'0');tm.classList.toggle('low',left<=120)};draw();
+  timer=setInterval(()=>{left--;draw();if(left<=0){stopTimer();end(true)}},1000);
+}
+function stopTimer(){if(timer){clearInterval(timer);timer=null}}
 function render(){
   const q=st.list[st.i];const n=st.list.length;
   $('#pb').style.width=(st.i/n*100)+'%';$('#cnt').textContent='سؤال '+(st.i+1)+' من '+n;$('#pts').textContent=st.score;
-  $('#stk').textContent=st.streak>=2?'🔥'+st.streak:'';$('#tp').textContent=q.topic;
+  $('#stk').textContent=st.streak>=2?'🔥'+st.streak:'';$('#tp').textContent=st.exam?'اختبار تجريبي':q.topic;
   const b=$('#qb');b.className='body';st.sel=new Set();
   const kinds={tf:'صح أو خطأ',sc:'اختر إجابة واحدة',mc:'اختر كل الإجابات الصحيحة',qa:'سؤال مباشر'};
   let h=`<span class="kind">${kinds[q.t]}</span><div class="q">${q.q}</div>`;
   $('#chk').style.display='none';
   if(q.t==='tf'){h+=`<div class="tfb"><button class="btn" data-v="1">صح</button><button class="btn" data-v="0">خطأ</button></div>`}
   else if(q.t==='qa'){h+=`<div class="reveal" id="rv">اضغط لإظهار الإجابة</div>`}
-  else{if(q.t==='mc')h+=`<div class="hint">اختر كل الخيارات الصحيحة ثم اضغط «تحقق»</div>`;
+  else{if(q.t==='mc')h+=`<div class="hint">اختر كل الخيارات الصحيحة ثم اضغط «${st.exam?'التالي':'تحقق'}»</div>`;
     h+=`<div class="opts ${q.t}">`+q.o.map((o,k)=>`<button class="op" data-k="${k}"><i>${L[k]}</i><span>${o}</span></button>`).join('')+`</div>`;
-    if(q.t==='mc'){$('#chk').style.display='block';$('#chkb').disabled=true}}
+    if(q.t==='mc'){$('#chk').style.display='block';$('#chkb').disabled=true;$('#chkb').textContent=st.exam?'التالي':'تحقق'}}
   b.innerHTML=h;
   if(q.t==='tf')b.querySelectorAll('.btn').forEach(x=>x.onclick=()=>answerTF(x));
   if(q.t==='sc')b.querySelectorAll('.op').forEach(x=>x.onclick=()=>answerSC(x));
@@ -171,20 +214,26 @@ function render(){
      $('#sy').onclick=()=>{$('#sy').classList.add('ok');lock();result(true,'')};$('#sn').onclick=()=>{$('#sn').classList.add('no');lock();result(false,'')}};
 }
 function lock(){$('#qb').classList.add('locked')}
-function answerTF(x){const q=st.list[st.i];const v=x.dataset.v==='1';const ok=v===q.ans;lock();
+function examNext(x,ok){x&&x.classList.add('pick');lock();record(ok);setTimeout(next,450)}
+function answerTF(x){const q=st.list[st.i];const v=x.dataset.v==='1';const ok=v===q.ans;
+  if(st.exam)return examNext(x,ok);lock();
   x.classList.add(ok?'ok':'no');if(!ok)$('#qb').querySelector(`.btn[data-v="${q.ans?1:0}"]`).classList.add('ok');
   let m=ok?'':`الإجابة: <b>${q.ans?'صح':'خطأ'}</b>`;if(q.fix)m+=(m?'<br>':'')+'✎ الصحيح: '+q.fix;if(q.note)m+=`<span class="nt">${q.note}</span>`;result(ok,m)}
-function answerSC(x){const q=st.list[st.i];const k=+x.dataset.k;const ok=q.c.includes(k);lock();
+function answerSC(x){const q=st.list[st.i];const k=+x.dataset.k;const ok=q.c.includes(k);
+  if(st.exam)return examNext(x,ok);lock();
   x.classList.add(ok?'ok':'no');q.c.forEach(c=>$('#qb').querySelector(`.op[data-k="${c}"]`).classList.add('ok'));
   let m=ok?'':`الإجابة: <b>${q.o[q.c[0]]}</b>`;if(q.note)m+=`<span class="nt">${q.note}</span>`;result(ok,m)}
-function checkMC(){const q=st.list[st.i];const c=new Set(q.c);const ok=c.size===st.sel.size&&[...c].every(x=>st.sel.has(x));lock();$('#chk').style.display='none';
+function checkMC(){const q=st.list[st.i];const c=new Set(q.c);const ok=c.size===st.sel.size&&[...c].every(x=>st.sel.has(x));$('#chk').style.display='none';
+  if(st.exam){$('#qb').querySelectorAll('.op.sel').forEach(o=>{o.classList.remove('sel');o.classList.add('pick')});return examNext(null,ok)}
+  lock();
   $('#qb').querySelectorAll('.op').forEach(o=>{const k=+o.dataset.k;o.classList.remove('sel');if(c.has(k)&&st.sel.has(k))o.classList.add('ok');else if(st.sel.has(k))o.classList.add('no');else if(c.has(k))o.classList.add('ok','miss')});
   let m=ok?'':'الإجابات الصحيحة: <b>'+q.c.map(i=>q.o[i]).join(' · ')+'</b>';if(q.note)m+=`<span class="nt">${q.note}</span>`;result(ok,m)}
+function record(ok){const q=st.list[st.i];
+  if(ok){st.score++;st.streak++;st.best=Math.max(st.best,st.streak);wrongBank=wrongBank.filter(k=>k!==key(q));if(!okBank.includes(key(q)))okBank.push(key(q))}
+  else{st.streak=0;st.wrong.push(q);if(!wrongBank.includes(key(q)))wrongBank.push(key(q));okBank=okBank.filter(k=>k!==key(q))}
+  store.set('wrong',wrongBank);store.set('ok',okBank)}
 const GOOD=['ممتاز!','أحسنت!','صح عليك!','كفو!','تمام!'],BAD=['قريبة!','ركّز معها','راجعها'];
-function result(ok,msg){const q=st.list[st.i];
-  if(ok){st.score++;st.streak++;st.best=Math.max(st.best,st.streak);wrongBank=wrongBank.filter(k=>k!==key(q))}
-  else{st.streak=0;st.wrong.push(q);if(!wrongBank.includes(key(q)))wrongBank.push(key(q))}
-  store.set('wrong',wrongBank);
+function result(ok,msg){record(ok);
   $('#pts').textContent=st.score;$('#stk').textContent=st.streak>=2?'🔥'+st.streak:'';
   $('#qb').classList.add(ok?'pop':'shake');
   const f=$('#fb');f.className='fb on '+(ok?'good':'bad');
@@ -193,19 +242,30 @@ function result(ok,msg){const q=st.list[st.i];
   $('#go').textContent=st.i+1<st.list.length?'التالي':'النتيجة';
 }
 function next(){$('#fb').className='fb';st.i++;if(st.i<st.list.length)render();else end()}
-function end(){
+function end(timeout){
+  stopTimer();
+  const answered=st.exam?st.i+(timeout?0:0):st.list.length;
+  if(timeout){for(let j=st.i;j<st.list.length;j++)st.wrong.push(st.list[j])}
   const n=st.list.length,p=Math.round(st.score/n*100);
-  store.set('done',store.get('done',0)+n);if(p>store.get('best',0))store.set('best',p);if(st.best>store.get('bstreak',0))store.set('bstreak',st.best);
+  store.set('done',store.get('done',0)+Math.min(st.i,n));if(p>store.get('best',0))store.set('best',p);if(st.best>store.get('bstreak',0))store.set('bstreak',st.best);
   const C=2*Math.PI*70;$('#arc').setAttribute('stroke-dasharray',C);$('#arc').setAttribute('stroke-dashoffset',C*(1-p/100));
   $('#pc').textContent=p+'%';
-  $('#et').textContent=p>=90?'أداء ممتاز!':p>=70?'أداء جيد جدًا':p>=50?'جيد، وتقدر أحسن':'راجع وأعد المحاولة';
-  $('#es').textContent=st.name;$('#s1').textContent=st.score;$('#s2').textContent=n-st.score;$('#s3').textContent=st.best;
+  $('#et').textContent=timeout?'انتهى الوقت':p>=90?'أداء ممتاز!':p>=70?'أداء جيد جدًا':p>=50?'جيد، وتقدر أحسن':'راجع وأعد المحاولة';
+  $('#es').textContent=st.name;
+  const sec=Math.round((Date.now()-st.t0)/1000);$('#etm').textContent=st.exam?('الوقت المستغرق: '+Math.floor(sec/60)+' د '+(sec%60)+' ث'):'';
+  $('#s1').textContent=st.score;$('#s2').textContent=n-st.score;$('#s3').textContent=st.best;
+  $('#s3').parentElement.style.display=st.exam?'none':'block';
   const wl=$('#wl');wl.innerHTML=st.wrong.length?'<h4>راجع هذه الأسئلة:</h4>'+st.wrong.map(q=>`<div class="wi">${q.q}<br><b>${q.t==='tf'?(q.ans?'صح':'خطأ')+(q.fix?' — '+q.fix:''):q.t==='qa'?q.a:q.c.map(i=>q.o[i]).join(' · ')}</b></div>`).join(''):'';
   $('#rw').style.display=st.wrong.length?'block':'none';
-  show('end');
+  $('#ra').textContent=st.exam?'اختبار تجريبي جديد':'أعد نفس القسم مرة ثانية';
+  show('end');if(p>=90)confetti();
 }
-$('#chkb').onclick=checkMC;$('#go').onclick=next;$('#ex').onclick=()=>{if(confirmExit())home()};
-function confirmExit(){return true}
-$('#rw').onclick=()=>start(st.wrong,'إعادة الأخطاء');$('#ra').onclick=()=>start(st.list,st.name);$('#hm').onclick=home;
+function confetti(){const c=$('#confetti'),x=c.getContext('2d');c.width=innerWidth;c.height=innerHeight;
+  const cols=['#2A9D8F','#D9A441','#E9DCC4','#fff','#B4553F'];const P=Array.from({length:130},()=>({x:Math.random()*c.width,y:-20-Math.random()*c.height*.5,r:4+Math.random()*5,v:2+Math.random()*3.5,s:Math.random()*6.28,w:.05+Math.random()*.1,c:cols[Math.floor(Math.random()*5)]}));
+  const t0=performance.now();(function f(t){x.clearRect(0,0,c.width,c.height);P.forEach(p=>{p.y+=p.v;p.s+=p.w;x.fillStyle=p.c;x.save();x.translate(p.x+Math.sin(p.s)*12,p.y);x.rotate(p.s);x.fillRect(-p.r/2,-p.r/2,p.r,p.r*1.6);x.restore()});
+  if(t-t0<2600)requestAnimationFrame(f);else x.clearRect(0,0,c.width,c.height)})(t0)}
+$('#chkb').onclick=checkMC;$('#go').onclick=next;$('#ex').onclick=home;
+$('#rw').onclick=()=>start(st.wrong,'إعادة الأخطاء');
+$('#ra').onclick=()=>{if(st.exam)startExam([...D.tf,...D.sc,...D.mc,...D.ph]);else start(st.list,st.name)};$('#hm').onclick=home;
 home();
 </script></body></html>
