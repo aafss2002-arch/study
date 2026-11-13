@@ -266,7 +266,7 @@ function setSubj(k){CUR=k;const S=SUBJ[k];D=ALLD[k];MODES=S.modes;PFX=S.pfx;wron
   document.title='مراجعة تفاعلية · '+S.t;try{history.replaceState(null,'','#'+k)}catch(e){}home()}
 function hub(){stopTimer();try{history.replaceState(null,'',location.pathname+location.search)}catch(e){}
   const g=$('#hgrid');g.innerHTML='';
-  Object.keys(SUBJ).forEach(k=>{const S=SUBJ[k],all=Object.keys(S.modes).flatMap(m=>ALLD[k][m]);
+  ['rf','ant'].forEach(k=>{const S=SUBJ[k],all=Object.keys(S.modes).flatMap(m=>ALLD[k][m]);
     let ok=[];try{ok=JSON.parse(localStorage.getItem(S.pfx+'ok')||'[]')}catch(e){}
     const m=all.filter(q=>ok.includes(q.k||q.q)).length,p=Math.round(m/all.length*100);
     const b=document.createElement('button');b.className='subj';
