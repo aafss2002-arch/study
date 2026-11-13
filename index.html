@@ -168,6 +168,7 @@ button{font-family:inherit;cursor:pointer;border:0}
 
 .live{display:none;text-align:center;font-size:12.5px;color:#A9BCD0;margin:18px 0 -6px}
 .live.on{display:block}
+.slive{margin:0 0 10px;font-size:13px;color:#DDE7F0}.slive b{color:#3DDC97;font-weight:900}
 .live i{display:inline-block;width:8px;height:8px;border-radius:50%;background:#3DDC97;margin-inline-end:7px;vertical-align:1px;box-shadow:0 0 0 0 rgba(61,220,151,.6);animation:lp 2s infinite}
 @keyframes lp{70%{box-shadow:0 0 0 7px rgba(61,220,151,0)}100%{box-shadow:0 0 0 0 rgba(61,220,151,0)}}
 
@@ -225,7 +226,7 @@ button{font-family:inherit;cursor:pointer;border:0}
 .inst .lt{display:flex;align-items:center;gap:8px;padding-bottom:8px;margin-bottom:8px;border-bottom:1.5px solid #E8ECEF}.inst .lt .lk{flex:none;background:var(--navy);color:#fff;font-size:11.5px;font-weight:700;padding:3px 10px;border-radius:20px}.inst .lt b{font-family:"Thmanyah Serif";font-weight:900;font-size:18px;color:var(--navy);line-height:1.35}
 .inst .sn{display:flex;justify-content:space-between;font-size:12px;color:var(--mute);font-weight:700}
 .inst .st{font-size:16px;font-weight:700;color:var(--navy);line-height:1.6;margin-top:2px}
-.inst .hn{display:none;font-size:13.5px;color:var(--coral);margin-top:4px}.inst .hn.on{display:block}
+.inst .hn{visibility:hidden;font-size:13.5px;color:var(--coral);margin-top:4px;min-height:1.6em}.inst .hn.on{visibility:visible}
 .inst .sb{height:5px;background:#E8ECEF;border-radius:5px;overflow:hidden;margin-top:7px}.inst .sb i{display:block;height:100%;background:var(--teal2);transition:width .3s}
 .dv{position:relative;border-radius:14px;overflow:hidden;background:#3A4232;touch-action:manipulation;user-select:none;-webkit-user-select:none}
 .dv img{display:block;width:100%;pointer-events:none}
@@ -304,6 +305,7 @@ button{font-family:inherit;cursor:pointer;border:0}
 </section>
 
 <section class="scr" id="sim">
+ <div class="live slive" id="slive"></div>
  <div class="sv" id="sv-home">
   <div class="shd"><button class="x2" id="simx" aria-label="رجوع">→</button><div><b>محاكي جهاز RF-5800H-MP</b><span>تعلّم تشغيل الجهاز خطوة بخطوة من الكتاب الرسمي</span></div></div>
   <div class="simhero"><img id="simfull" alt=""></div>
@@ -358,7 +360,7 @@ let st={},timer=null;
 let wrongBank=store.get('wrong',[]),okBank=store.get('ok',[]);
 const key=q=>q.k||q.q;
 function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
-function show(id){const f=$('#fb');if(f){f.style.transition='none';f.className='fb';void f.offsetWidth;f.style.transition=''}document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));$('#'+id).classList.add('on');const tl=$('#tail');if(tl)tl.style.display=(id==='hub'||id==='home')?'block':'none';window.scrollTo(0,0)}
+function show(id){const f=$('#fb');if(f){f.style.transition='none';f.className='fb';void f.offsetWidth;f.style.transition=''}document.querySelectorAll('.scr').forEach(s=>s.classList.remove('on'));$('#'+id).classList.add('on');window.__loc=id==='sim'?'sim':'';try{window.__pub&&window.__pub()}catch(e){}const tl=$('#tail');if(tl)tl.style.display=(id==='hub'||id==='home')?'block':'none';window.scrollTo(0,0)}
 function modeBtn(cls,icon,title,desc,count,list,onclick){
   const b=document.createElement('button');b.className='mode '+cls;
   let bar='';if(list){const m=list.filter(q=>okBank.includes(key(q))).length,p=Math.round(m/list.length*100);
@@ -515,13 +517,15 @@ setTimeout(()=>{SIM.init();const h0=location.hash.slice(1);if(SUBJ[h0])setSubj(h
 
 (function(){try{
 const T='aafss-hw-study/live/v1/',id=Math.random().toString(36).slice(2,10)+Date.now().toString(36),P={};
-const draw=()=>{const now=Date.now();for(const k in P)if(now-P[k]>75000)delete P[k];const n=Object.keys(P).length,el=document.getElementById('live');
-  if(n>0){el.innerHTML='<i></i>'+(n===1?'متصل الآن: أنت فقط':n+' متصلين الآن');el.classList.add('on')}else el.classList.remove('on')};
+const L={};const draw=()=>{const now=Date.now();for(const k in P)if(now-P[k]>75000){delete P[k];delete L[k]}const n=Object.keys(P).length,el=document.getElementById('live');
+  if(n>0){el.innerHTML='<i></i>'+(n===1?'متصل الآن: أنت فقط':n+' متصلين الآن');el.classList.add('on')}else el.classList.remove('on');
+  const se=document.getElementById('slive');if(se){const m=Object.keys(P).filter(k=>L[k]==='sim').length;
+   if(m>0){se.innerHTML='<i></i>على المحاكي الآن: '+(m===1?'<b>أنت فقط</b>':'<b>'+m+'</b> متدربين')+(n>m?' · بالموقع كله: '+n:'');se.classList.add('on')}else se.classList.remove('on')}};
 const go=()=>{const c=mqtt.connect('wss://broker.emqx.io:8084/mqtt',{clientId:'hw_'+id,clean:true,keepalive:30,reconnectPeriod:6000,connectTimeout:10000,
   will:{topic:T+id,payload:'',retain:true,qos:0}});
-  const pub=()=>c.connected&&c.publish(T+id,String(Date.now()),{retain:true});
+  const pub=()=>{if(!c.connected)return;c.publish(T+id,Date.now()+'|'+(window.__loc||''),{retain:true})};window.__pub=pub;
   c.on('connect',()=>{c.subscribe(T+'+');pub()});
-  c.on('message',(t,m,pk)=>{const k=t.slice(T.length),v=m.toString();if(!v){delete P[k]}else{const ts=+v;if(pk.retain){if(Math.abs(Date.now()-ts)<75000)P[k]=Date.now()}else P[k]=Date.now()}draw()});
+  c.on('message',(t,m,pk)=>{const k=t.slice(T.length),v=m.toString();if(!v){delete P[k];delete L[k]}else{const pv=v.split('|'),ts=+pv[0];L[k]=pv[1]||'';if(pk.retain){if(Math.abs(Date.now()-ts)<75000)P[k]=Date.now()}else P[k]=Date.now()}draw()});
   setInterval(pub,30000);setInterval(draw,15000);
   addEventListener('pagehide',()=>{try{c.publish(T+id,'',{retain:true})}catch(e){}});
   document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')pub()})};
@@ -754,7 +758,9 @@ function lessonsView(ch){mode=ch?'chal':'guide';$('#lhd').textContent=ch?'تحد
 function prep(pre){defaults();stack=[];scr=null;clearT();if(pre==='on'||pre==='ale'){R.knob='PT';R.on=true;if(pre==='ale')R.mode='ALE';setS(homeS())}else draw()}
 function startLesson(i){const l=LESSONS[i];L={i,steps:expand(l.s),k:0,miss:0,hint:false};prep(l.pre);
  $('#ltn').textContent=l.t;$('#dhd').textContent='RF-5800H-MP';$('#dsub').textContent=mode==='chal'?'تحدّي · بدون تلميحات':'درس موجّه';$('#inst').style.display='';$('#sbtns').style.display='flex';$('#cap').style.display='none';$('#hintb').style.display=mode==='chal'?'':'none';
- sv('dev');fit();renderStep()}
+ sv('dev');fit();fixH();renderStep()}
+function fixH(){if(!L)return;const st=$('#stt');st.style.minHeight='0';let mx=0;L.steps.forEach(x=>{st.textContent=x.t;mx=Math.max(mx,st.offsetHeight)});st.style.minHeight=mx+'px'}
+addEventListener('resize',()=>{clearTimeout(window.__fh);window.__fh=setTimeout(()=>{if(L&&$('#sv-dev').classList.contains('on')){fixH();renderStep()}},150)});
 function startFree(){L=null;mode='free';defaults();stack=[];scr=null;clearT();$('#dhd').textContent='تشغيل حر';$('#dsub').textContent='ابدأ بتحريك مفتاح الأوضاع إلى PT';
  $('#inst').style.display='none';$('#sbtns').style.display='none';$('#cap').style.display='';$('#cap').innerHTML='اضغط على أي زر أو على كلمات مفتاح الأوضاع (OFF، PT، CT ...) وبينشرح لك هنا.';sv('dev');draw();fit()}
 function target(){if(!L)return null;const s=L.steps[L.k];if(!s)return null;const a=s.a;
