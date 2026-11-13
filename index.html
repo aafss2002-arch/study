@@ -307,7 +307,7 @@ button{font-family:inherit;cursor:pointer;border:0}
 <section class="scr" id="sim">
  <div class="live slive" id="slive"></div>
  <div class="sv" id="sv-home">
-  <div class="shd"><button class="x2" id="simx" aria-label="رجوع">→</button><div><b>محاكي جهاز RF-5800H-MP</b><span>تعلّم تشغيل الجهاز خطوة بخطوة من الكتاب الرسمي</span></div></div>
+  <div class="shd"><button class="x2" id="simx" aria-label="رجوع">→</button><div><b>محاكي جهاز RF-5800H-MP</b><span>تعلّم تشغيل الجهاز خطوة بخطوة من كتالوج الشركة الأم</span></div></div>
   <div class="simhero"><img id="simfull" alt=""></div>
   <div class="simcards">
    <button class="scard" data-go="tour"><i>🔎</i><div><b>تعرّف على الجهاز</b><span>أجزاء الواجهة والمقرات ومفتاح الأوضاع ولوحة المفاتيح</span></div></button>
@@ -320,7 +320,7 @@ button{font-family:inherit;cursor:pointer;border:0}
  <div class="sv" id="sv-tour">
   <div class="shd"><button class="x2 sback" aria-label="رجوع">→</button><div><b>تعرّف على الجهاز</b><span>اضغط على أي رقم</span></div></div>
   <div class="tourwrap" id="tourwrap"><img id="tourimg" alt=""></div>
-  <div class="tinfo" id="tinfo">اضغط على الأرقام فوق الصورة عشان تعرف وظيفة كل جزء، والأرقام نفس أرقام شكل (4) في الكتاب.</div>
+  <div class="tinfo" id="tinfo">اضغط على الأرقام فوق الصورة عشان تعرف وظيفة كل جزء، والأرقام نفس أرقام الشكل في كتالوج الشركة الأم.</div>
   <div class="ttab" id="ttab"></div>
  </div>
  <div class="sv" id="sv-lessons">
@@ -394,7 +394,7 @@ function home(){
   $('#main').innerHTML=`<button class="hero-btn"><div class="hb-t"><b>${started?'كمّل المذاكرة':'ابدأ المذاكرة'}</b><span>${R.length} جولات قصيرة · ${RS} سؤال تقريبًا في كل جولة</span></div><i>▶</i>
   <div class="hb-p"><div><i style="width:${p}%"></i></div><span>أكملت ${doneR} من ${R.length} جولات</span></div></button>`;
   $('#main .hero-btn').onclick=showRounds;
-  if(CUR==='rf'){const sb=document.createElement('button');sb.className='simbtn';sb.innerHTML=`<img src="${SIMG.full}" alt=""><div><b>محاكي الجهاز 📻</b><span>تعلّم تشغيل وبرمجة RF-5800 خطوة بخطوة من الكتاب الرسمي</span></div>`;sb.onclick=()=>SIM.open();$('#main').prepend(sb)}
+  if(CUR==='rf'){const sb=document.createElement('button');sb.className='simbtn';sb.innerHTML=`<img src="${SIMG.full}" alt=""><div><b>محاكي الجهاز 📻</b><span>تعلّم تشغيل وبرمجة RF-5800 خطوة بخطوة من كتالوج الشركة الأم</span></div>`;sb.onclick=()=>SIM.open();$('#main').prepend(sb)}
   const wq=all.filter(q=>wrongBank.includes(key(q)));
   const duo=$('#duo');duo.innerHTML=`<button id="bx"><i>⏱</i><b>اختبار تجريبي</b><span>${exN()} سؤال · ${SUBJ[CUR].exam.min} دقيقة</span></button><button id="bw" ${wq.length?'':'disabled'}><i>↺</i><b>أخطائي</b><span>${wq.length?wq.length+' سؤال':'لا يوجد'}</span></button>`;
   $('#bx').onclick=()=>startExam(all);$('#bw').onclick=()=>start(shuffle(wq),'أخطائي');
