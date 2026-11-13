@@ -684,10 +684,20 @@ let flashT;function flashLCD(){SND.err();els.lcd.style.background='#7E8C66';clea
 function press(k){if(!R.on||!scr||R.zero)return;if(['CC','RV','LD'].includes(R.knob))return;scr.key(k);if(scr===null)return;draw()}
 function ptt(){if(!R.on||!scr||R.zero)return;if(scr.tag==='home'){const old=scr;const ln=R.mode==='FIX'?['TRANSMITTING','CH '+R.ch,'PWR '+R.pwr,'']:['TRANSMITTING','','','']; setS(msg('tx',ln));later(1100,()=>setS(old))}}
 // ---------- drawing ----------
+const GL={" ": [0, 0, 0, 0, 0], "!": [0, 0, 95, 0, 0], "\"": [0, 3, 0, 3, 0], "#": [20, 127, 20, 127, 20], "$": [36, 42, 127, 42, 18], "%": [35, 19, 8, 100, 98], "&": [54, 73, 85, 34, 80], "'": [0, 5, 3, 0, 0], "(": [0, 28, 34, 65, 0], ")": [0, 65, 34, 28, 0], "*": [20, 8, 62, 8, 20], "+": [8, 8, 62, 8, 8], ",": [0, 80, 48, 0, 0], "-": [8, 8, 8, 8, 8], ".": [0, 96, 96, 0, 0], "/": [32, 16, 8, 4, 2], "0": [62, 81, 73, 69, 62], "1": [0, 66, 127, 64, 0], "2": [66, 97, 81, 73, 70], "3": [33, 65, 69, 75, 49], "4": [24, 20, 18, 127, 16], "5": [39, 69, 69, 69, 57], "6": [60, 74, 73, 73, 48], "7": [1, 113, 9, 5, 3], "8": [54, 73, 73, 73, 54], "9": [6, 73, 73, 41, 30], ":": [0, 54, 54, 0, 0], ";": [0, 86, 54, 0, 0], "<": [8, 20, 34, 65, 0], "=": [20, 20, 20, 20, 20], ">": [0, 65, 34, 20, 8], "?": [2, 1, 81, 9, 6], "@": [50, 73, 121, 65, 62], "A": [126, 17, 17, 17, 126], "B": [127, 73, 73, 73, 54], "C": [62, 65, 65, 65, 34], "D": [127, 65, 65, 34, 28], "E": [127, 73, 73, 73, 65], "F": [127, 9, 9, 9, 1], "G": [62, 65, 73, 73, 122], "H": [127, 8, 8, 8, 127], "I": [0, 65, 127, 65, 0], "J": [32, 64, 65, 63, 1], "K": [127, 8, 20, 34, 65], "L": [127, 64, 64, 64, 64], "M": [127, 2, 12, 2, 127], "N": [127, 4, 8, 16, 127], "O": [62, 65, 65, 65, 62], "P": [127, 9, 9, 9, 6], "Q": [62, 65, 81, 33, 94], "R": [127, 9, 25, 41, 70], "S": [70, 73, 73, 73, 49], "T": [1, 1, 127, 1, 1], "U": [63, 64, 64, 64, 63], "V": [31, 32, 64, 32, 31], "W": [63, 64, 56, 64, 63], "X": [99, 20, 8, 20, 99], "Y": [7, 8, 112, 8, 7], "Z": [97, 81, 73, 69, 67], "[": [0, 127, 65, 65, 0], "\\": [2, 4, 8, 16, 32], "]": [0, 65, 65, 127, 0], "^": [4, 2, 1, 2, 4], "_": [64, 64, 64, 64, 64], "`": [0, 1, 2, 4, 0], "a": [32, 84, 84, 84, 120], "b": [127, 72, 68, 68, 56], "c": [56, 68, 68, 68, 32], "d": [56, 68, 68, 72, 127], "e": [56, 84, 84, 84, 24], "f": [8, 126, 9, 1, 2], "g": [12, 82, 82, 82, 62], "h": [127, 8, 4, 4, 120], "i": [0, 68, 125, 64, 0], "j": [32, 64, 68, 61, 0], "k": [127, 16, 40, 68, 0], "l": [0, 65, 127, 64, 0], "m": [124, 4, 24, 4, 120], "n": [124, 8, 4, 4, 120], "o": [56, 68, 68, 68, 56], "p": [124, 20, 20, 20, 8], "q": [8, 20, 20, 24, 124], "r": [124, 8, 4, 4, 8], "s": [72, 84, 84, 84, 32], "t": [4, 63, 68, 64, 32], "u": [60, 64, 64, 32, 124], "v": [28, 32, 64, 32, 28], "w": [60, 64, 48, 64, 60], "x": [68, 40, 16, 40, 68], "y": [12, 80, 80, 80, 60], "z": [68, 100, 84, 76, 68], "{": [0, 8, 54, 65, 0], "|": [0, 0, 127, 0, 0], "}": [0, 65, 54, 8, 0], "~": [16, 8, 8, 16, 8], "█": [127, 127, 127, 127, 127], "░": [85, 42, 85, 42, 85], "◁": [8, 28, 62, 127, 0], "▷": [0, 127, 62, 28, 8], "▲": [64, 96, 112, 96, 64], "▼": [1, 3, 7, 3, 1]};
+const LCDR={cv:null,ctx:null,W:0,H:0,
+ ensure(){if(!this.cv){this.cv=document.createElement('canvas');this.cv.style.cssText='position:absolute;left:0;top:0;width:100%;height:100%';els.lcd.appendChild(this.cv);this.ctx=this.cv.getContext('2d')}},
+ resize(){if(!els.lcd)return;this.ensure();const d=window.devicePixelRatio||1;this.W=Math.max(2,Math.round(els.lcd.clientWidth*d));this.H=Math.max(2,Math.round(els.lcd.clientHeight*d));this.cv.width=this.W;this.cv.height=this.H},
+ clear(){this.ensure();this.ctx.clearRect(0,0,this.cv.width,this.cv.height)},
+ draw(lines,alpha){this.ensure();if(this.W<4)this.resize();const c=this.ctx,W=this.W,H=this.H;c.clearRect(0,0,W,H);
+  const cols=20,rows=4,px=Math.min(W/(cols*6+1.5),H/(rows*9+1.5)),ox=(W-px*(cols*6-1))/2,oy=(H-px*(rows*9-1))/2,ds=px*.82;
+  const on=`rgba(14,19,4,${alpha})`,gh='rgba(20,28,0,.075)';
+  for(let r=0;r<rows;r++){const s=lines[r]||'';for(let k=0;k<cols;k++){const g=GL[s[k]]||GL[' '],x0=ox+k*6*px,y0=oy+r*9*px;
+   for(let cx=0;cx<5;cx++){const col=g[cx]||0;for(let ry=0;ry<8;ry++){c.fillStyle=((col>>ry)&1)?on:gh;c.fillRect(x0+cx*px,y0+ry*px,ds,ds)}}}}}};
 function draw(){if(!els.lcd)return;const l=els.lcd;
- if(!R.on||!scr){l.className='lcd off';l.innerHTML='';}else{l.className='lcd';const lines=scr.lines().slice(0,4);while(lines.length<4)lines.push('');
-  l.innerHTML=lines.map(x=>'<div>'+esc(PAD(x,20))+'</div>').join('');
-  const b=R.light==='OFF'?0:R.bright;l.style.background=`linear-gradient(180deg,hsl(66,${46+b*4}%,${30+b*5}%),hsl(70,${42+b*4}%,${26+b*5}%))`;l.style.color=`rgba(18,22,6,${.62+R.contrast*.06})`}
+ if(!R.on||!scr){l.className='lcd off';LCDR.clear();l.dataset.t=''}else{l.className='lcd';const lines=scr.lines().slice(0,4).map(x=>PAD(x,20));while(lines.length<4)lines.push(PAD('',20));
+  const b=R.light==='OFF'?0:R.bright;l.style.background=`linear-gradient(180deg,hsl(66,${46+b*4}%,${30+b*5}%),hsl(70,${42+b*4}%,${26+b*5}%))`;
+  LCDR.draw(lines,.6+R.contrast*.065);l.dataset.t=lines.join('\n')}
  els.kp.querySelector('i').style.transform=`rotate(${-KANG[R.knob]}deg)`;
  document.querySelectorAll('.kl').forEach(e=>e.classList.toggle('cur',e.dataset.k===R.knob));
  if(L)lessonTick()}
@@ -721,11 +731,11 @@ function build(){const dv=$('#dv');$('#kduimg').src=SIMG.kdu;els.lcd=$('#lcd');e
   ['KDU',9,'لوحة المفاتيح حروف وأرقام (KDU)','فيها مفاتيح CALL و LT و MODE و OPT و PGM و ENT و CLR والأسهم والصوت والتضبيطات المسبقة.'],
   ['J3',10,'مقر توصيل البيانات DATA (J3)','يستخدم في حالة البرمجة باستخدام الحاسب RPA.']];
  const tw=$('#tourwrap');TOUR.forEach(([id,n,t,d])=>{const [x,y]=FS[id];const b=document.createElement('button');b.className='tdot';b.textContent=n;
-  Object.assign(b.style,{left:pct(x,FW),top:pct(y,FH)});b.onclick=()=>{tw.querySelectorAll('.tdot').forEach(e=>e.classList.remove('sel'));b.classList.add('sel');$('#tinfo').innerHTML=`<b>${n}. ${t}</b><br>${d}`};tw.appendChild(b)});
+  Object.assign(b.style,{left:pct(x,FW),top:pct(y,FH)});b.onclick=()=>{tw.querySelectorAll('.tdot').forEach(e=>e.classList.remove('sel'));b.classList.add('sel');$('#tinfo').innerHTML=`<b>${n}. ${t}</b>${d}`};tw.appendChild(b)});
  const krow=(c,d)=>`<div><code>${c}</code><span>${d}</span></div>`;
  $('#ttab').innerHTML='<div class="ttl">مفتاح أوضاع التشغيل</div>'+['OFF','PT','CC','CT','RV','LD','Z'].map(p=>krow(p,KEYINFO[p].replace(/<b>.*?<\/b>: /,''))).join('')+
   '<div class="ttl">لوحة المفاتيح KDU</div>'+['1','2','3','4','7','8','6','9','0','L','CLR','ENT','VOL+','PRE+'].map(k=>krow(KEYNAME[k].replace(/^\d \/ /,''),KEYINFO[k].replace(/<b>.*?<\/b>: /,''))).join('')+krow('PTT',KEYINFO.PTT.replace(/<b>.*?<\/b>: /,''))}
-function fit(){const w=els.lcd.clientWidth,h=els.lcd.clientHeight;els.lcd.style.fontSize=Math.min(w/12.4,h/4.5)+'px'}
+function fit(){LCDR.resize();draw()}
 // ---------- lessons ----------
 const ON={pre:'on'},ALEP={pre:'ale'};
 const LESSONS=[
