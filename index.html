@@ -260,6 +260,18 @@ button{font-family:inherit;cursor:pointer;border:0}
 .simbtn{display:flex;align-items:center;gap:12px;width:100%;margin:0 0 14px;background:linear-gradient(135deg,#3A4A2E,#26311E);color:#fff;border-radius:18px;padding:12px 14px;text-align:right;box-shadow:0 4px 0 rgba(0,0,0,.3);border:1px solid rgba(255,255,255,.12)}
 .simbtn img{width:92px;border-radius:8px;flex:none}
 .simbtn b{display:block;font-size:17px;font-weight:900}.simbtn span{font-size:12.5px;color:#C9D2BE;line-height:1.5}
+
+.pz{position:absolute;background:transparent;border:2px solid transparent;border-radius:10px;cursor:pointer;padding:0;transition:.15s}
+.pz.rnd{border-radius:50%}
+.pz:hover{border-color:rgba(212,168,75,.55)}
+.pz.on{border-color:var(--gold);box-shadow:0 0 0 4px rgba(212,168,75,.28),inset 0 0 0 999px rgba(212,168,75,.12)}
+#kpx{display:none}#kpx.on{display:block}
+.kpw{position:relative;border-radius:14px;overflow:hidden;background:#EFEBE3}.kpw img{display:block;width:100%}
+.tinfo i{font-style:normal;color:var(--teal2);font-weight:800}.tinfo .kx{font-size:13px;color:#7a7a7a;margin-top:4px}
+.kpgo,.kpback{margin-top:10px;width:100%;padding:11px;border-radius:12px;font-weight:800;font-size:14.5px;background:var(--navy);color:#fff}
+.kpback{background:#fff;color:var(--ink);border:2px solid var(--line)}
+.rmbox{background:#FFF8E6;border:1px solid #F0D99A;border-radius:12px;padding:9px 12px;margin-top:8px;font-size:13.5px;line-height:1.7;color:#5b4a1e}.rmbox b{display:block;font-size:13.5px;margin-bottom:2px}
+#vfyb{background:var(--teal2)!important;color:#fff!important}
 </style></head><body><div class="app">
 <section class="scr" id="hub">
 <div class="hero hub-hero">
@@ -310,9 +322,9 @@ button{font-family:inherit;cursor:pointer;border:0}
   <div class="shd"><button class="x2" id="simx" aria-label="رجوع">→</button><div><b>محاكي جهاز RF-5800H-MP</b><span>تعلّم تشغيل الجهاز خطوة بخطوة من كتالوج الشركة الأم</span></div></div>
   <div class="simhero"><img id="simfull" alt=""></div>
   <div class="simcards">
-   <button class="scard" data-go="tour"><i>🔎</i><div><b>تعرّف على الجهاز</b><span>أجزاء الواجهة والمقرات ومفتاح الأوضاع ولوحة المفاتيح</span></div></button>
+   <button class="scard" data-go="tour"><i>🔎</i><div><b>تعرّف على الجهاز</b><span>اضغط على أي جزء في الجهاز ويشرح لك وش هو ووش فايدته</span></div></button>
    <button class="scard" data-go="lessons"><i>🎓</i><div><b>دروس موجّهة</b><span>المحاكي يوريك الزر المطلوب ويشرح كل خطوة</span></div></button>
-   <button class="scard" data-go="chal"><i>🎯</i><div><b>تحدّي</b><span>نفّذ المهمة بنفسك بدون تلميح وشوف كم غلطة</span></div></button>
+   <button class="scard" data-go="chal"><i>🎯</i><div><b>تحدّي</b><span>نفّذ المهمة بطريقتك واضغط «تحقق»، مثل اختبار المعلم</span></div></button>
    <button class="scard" data-go="free"><i>📻</i><div><b>تشغيل حر</b><span>استخدم الجهاز براحتك، وكل زر تضغطه ينشرح لك</span></div></button>
   </div>
   <div class="simcredit">SIMULATOR BY ABDULAZIZ ALANEZI</div>
@@ -329,11 +341,11 @@ button{font-family:inherit;cursor:pointer;border:0}
  </div>
  <div class="sv" id="sv-dev">
   <div class="shd"><button class="x2" id="devx" aria-label="رجوع">→</button><div style="flex:1"><b id="dhd"></b><span id="dsub"></span></div><button class="x2" id="sndb" aria-label="الصوت">🔊</button></div>
-  <div class="inst" id="inst"><div class="lt"><span class="lk">الدرس</span><b id="ltn"></b></div><div class="sn"><span id="stn"></span><span id="mst"></span></div><div class="st" id="stt"></div><div class="hn" id="hnt"></div><div class="sb"><i id="sbar"></i></div></div>
+  <div class="inst" id="inst"><div class="lt"><span class="lk">الدرس</span><b id="ltn"></b></div><div class="sn"><span id="stn"></span><span id="mst"></span></div><div class="st" id="stt"></div><div class="hn" id="hnt"></div><div class="sb"><i id="sbar"></i></div><div class="rmbox" id="rmbox"></div></div>
   <div class="dv" id="dv"><img id="kduimg" alt=""><div class="lcd off" id="lcd"></div><div class="kp" id="kp"><i></i></div></div>
   <button class="ptt" id="ptt">🎙 PTT · ريشة الإرسال</button>
   <div class="cap" id="cap"></div>
-  <div class="sbtns" id="sbtns"><button id="hintb">💡 تلميح</button><button id="rstb">↺ إعادة الدرس</button></div>
+  <div class="sbtns" id="sbtns"><button id="vfyb">✓ تحقق</button><button id="hintb">💡 تلميح</button><button id="rstb">↺ إعادة الدرس</button></div>
  </div>
  <div class="sv" id="sv-end">
   <div class="lend"><div class="big" id="lebig">🎉</div><b id="let"></b><p id="les"></p>
@@ -808,7 +820,7 @@ function rdef(){return{tod:true,att:{hs:false,ant:false,gps:false,data:false},ke
  hopx:{},excl:[],mdm:{MDM1:{name:'SER-2400',type:'SERIAL'},MDM2:{name:'ARQ-AUTO',type:'ARQ'}},
  sys:{SYSPRE1:{name:'FIXNET1',mode:'FIX',ch:'001',mdm:'OFF',enc:'CITADEL',key:'TEK01',ptv:'CLR',ctv:'DV24'},SYSPRE2:{name:'ALENET2',mode:'ALE',ch:'MP1',mdm:'OFF',enc:'CITADEL',key:'TEK01',ptv:'CLR',ctv:'DV24'},
   SYSPRE3:{name:'FIXNET3',mode:'FIX',ch:'002',mdm:'OFF',enc:'NONE',key:'',ptv:'CLR',ctv:'DV24'},SYSPRE4:{name:'HOPNET1',mode:'HOP',ch:'01',mdm:'OFF',enc:'CITADEL',key:'TEK01',ptv:'CLR',ctv:'DV24'},
-  SYSPRE5:{name:'3GNET1',mode:'3G',ch:'NET1',mdm:'OFF',enc:'CITADEL',key:'TEK01',ptv:'CLR',ctv:'DV24'}},sysOv:false,tun:{},sched:[],field:0}}
+  SYSPRE5:{name:'3GNET1',mode:'3G',ch:'NET1',mdm:'OFF',enc:'CITADEL',key:'TEK01',ptv:'CLR',ctv:'DV24'}},sysOv:false,tun:{},sched:[],field:-1}}
 // ---------- HOME (system preset screen / channel preset screen) ----------
 function modePres(){return Object.keys(R.sys).filter(k=>R.sys[k].mode===R.mode)}
 function curPre(){const ks=modePres();return ks.includes('SYSPRE'+R.pre)?'SYSPRE'+R.pre:null}
@@ -978,7 +990,7 @@ function configMenu(){return hm('config','PGM>CONFIG',['RADIO','PORTS','AUDIO','
   if(x==='ASCII')return wiz('pascii',[...PORTSET],()=>backTo('ports'))();
   return wiz('psnmp',[['SNMP',ED],['COMMUNITY',{len:8,kind:'alnum',def:'PUBLIC'}],['TRAP ADDRESS',{len:12,kind:'num',mask:'###.###.###.###',def:'000.000.000.000'}]],()=>backTo('ports'))()}));
  if(v==='AUDIO')return W([['AUX AUDIO',['UNMUTE','MUTE']],['SIDETONE AUDIO',['UNMUTE','MUTE']]]);
- if(v==='TOD')return W([['UTC OFFSET',['+00:00','+01:00','+02:00','+03:00','+04:00','-01:00'],R.cfg.utc],['LEAP SECONDS',{len:2,kind:'num',def:'00'}],['DATE FORMAT',['YYYY-MM-DD','MM-DD-YY','DD-MM-YY','ZULU']],['NEW DATE',{len:8,kind:'num',mask:'####-##-##',def:'20261116'}],['TIME FORMAT',['24-HR','12-HR']],['NEW TOD',{len:6,kind:'num',mask:'##:##:##',def:'120000'}],['UPDATE LP/SYNC',YN]],o=>{R.cfg.utc=o['UTC OFFSET'];R.tod=true});
+ if(v==='TOD')return W([['UTC OFFSET',['+00:00','+01:00','+02:00','+03:00','+04:00','-01:00'],R.cfg.utc],['LEAP SECONDS',{len:2,kind:'num',def:'00'}],['DATE FORMAT',['YYYY-MM-DD','MM-DD-YY','DD-MM-YY','ZULU']],['NEW DATE',{len:8,kind:'num',mask:'####-##-##',def:'20261116'}],['TIME FORMAT',['24-HR','12-HR']],['NEW TOD',{len:6,kind:'num',mask:'##:##:##',def:'120000'}]],o=>{R.cfg.utc=o['UTC OFFSET'];R.tod=true;R.todSet=true});
  if(v==='MESSAGE')return W([['ROUTE MODEM DATA TO',['DTE PORT','RDP','FILE']],['ROUTE ARQ DATA TO',['DTE PORT','RDP','FILE']],['SOURCE ADDRESS',{len:15,kind:'alnum',def:R.cfg.name}],['DESTINATION ADDRESS',{len:15,kind:'alnum',def:'MP2'}],['AUTO TX TYPE',['ARQ','NON-ARQ']]]);
  if(v==='LPC')return W([['NOISE CANCELLATION',ONOFF]]);
  if(v==='GPS')return W([['SLEEP TIME (MIN)',{len:4,kind:'num',def:'0000'}],['POSITION FORMAT',['L/L-DMS','L/L-DM.','MGRS-NEW','MGRS','UTM/UPS']],['DATUM',['WGS-84','NAD-27','EUROPEAN 1950']],['LINEAR UNITS',['METRIC','STATUTE','NAUTICAL']],['ELEVATION FORMAT',['MEAN SEA LEVEL','DATUM BASED']],['ANGLE FORMAT',['DEG/TRUE NORTH','DEG/MAGNETIC','MIL/MAGNETIC','MIL/TRUE NORTH']],['GRID DIGITS',['10','8','6','14','12','4','2']]]);
@@ -1066,7 +1078,7 @@ function hopPgm(){return hm('phop','PGM>MODE>HOP',['CHANNEL','EXCLUDE','CONFIG']
    o=>o['HOP TYPE']==='LIST'?{info:['ADD LIST FREQUENCIES','ENT=ADD EACH FREQ','CLR=DONE','ENT=START']}:null,
    o=>o['HOP TYPE']==='LIST'?{list:1}:null,
    o=>o['HOP TYPE']==='LIST'?['AUTORESPOND',YN]:null,
-   ['HOP CHANNEL ID',{len:8,kind:'num',def:'00000000',min:1}],['TOD MASK',{len:8,kind:'num',def:'00000000',min:1}],o=>o['HOP TYPE']!=='LIST'?['AUTORESPOND',YN]:null,['HAIL RX',NY]],o=>{R.hop[o['ADD HOP CHANNEL']]=o['CENTER FREQ']||'LIST';backTo('phopch');push(inf('hsaved',['HOP CHANNEL '+o['ADD HOP CHANNEL'],'','STORED','']))})();
+   ['HOP CHANNEL ID',{len:8,kind:'num',def:'00000000',min:1}],['TOD MASK',{len:8,kind:'num',def:'00000000',min:1}],o=>o['HOP TYPE']!=='LIST'?['AUTORESPOND',YN]:null],o=>{R.hop[o['ADD HOP CHANNEL']]=o['CENTER FREQ']||'LIST';backTo('phopch');push(inf('hsaved',['HOP CHANNEL '+o['ADD HOP CHANNEL'],'','STORED','']))})();
   const L2=Object.keys(R.hop).sort();
   if(x==='DELETE')return push(cf('hdel','DELETE HOP CHANNEL',L2,null,c=>push(cf('hdelq','DELETE?',NY,'NO',q=>{if(q==='YES')delete R.hop[c];backTo('phopch')}))));
   push(cf('hrev','HOP CHANNEL',L2,null,c=>push(inf('hrv',['HOP CHANNEL '+c,'CENTER '+R.hop[c],'','']))))}));
@@ -1115,7 +1127,7 @@ const LESSONS=[
 function expand(steps){const out=[];steps.forEach(([a,t])=>{if(a.startsWith('type:')){const d=a.slice(5);[...d].forEach((c,i)=>out.push({a:'k:'+c,t:t+(d.length>1?` (الرقم ${c} — ${i+1} من ${d.length})`:'')}))}else out.push({a,t})});return out}
 const store2={get:()=>{try{return JSON.parse(localStorage.getItem('rf_sim')||'{}')}catch(e){return{}}},set:v=>{try{localStorage.setItem('rf_sim',JSON.stringify(v))}catch(e){}}};
 function sv(id){document.querySelectorAll('#sim .sv').forEach(e=>e.classList.remove('on'));$('#sv-'+id).classList.add('on');window.scrollTo(0,0)}
-function lessonsView(ch){mode=ch?'chal':'guide';$('#lhd').textContent=ch?'تحدّي':'دروس موجّهة';$('#lsub').textContent=ch?'نفّذ المهمة بدون تلميح، والغلطات تنحسب':'المحاكي يوريك الزر المطلوب في كل خطوة';
+function lessonsView(ch){mode=ch?'chal':'guide';$('#lhd').textContent=ch?'تحدّي':'دروس موجّهة';$('#lsub').textContent=ch?'نفّذ المهمة بطريقتك ثم اضغط «تحقق»':'المحاكي يوريك الزر المطلوب في كل خطوة';
  const d=store2.get();let g='',h='';LESSONS.forEach((l,i)=>{if(l.g!==g){g=l.g;h+=`<div class="lgrp">${g}</div>`}const r=d[(ch?'c':'g')+i];
   h+=`<button class="lrow ${r!==undefined?'done':''}" data-i="${i}"><span class="ln">${r!==undefined?'✓':i+1}</span><b>${l.t}</b><small>${r!==undefined?(ch?(r===0?'بدون غلط':r+' غلطة'):'تم'):''}</small></button>`});
  $('#llist').innerHTML=h;$('#llist').querySelectorAll('.lrow').forEach(b=>b.onclick=()=>startLesson(+b.dataset.i));sv('lessons')}
@@ -1153,6 +1165,101 @@ function finish(){document.querySelectorAll('#sim .hl').forEach(e=>e.classList.r
   $('#let').textContent='أكملت: '+LESSONS[i].t;$('#les').textContent=mode==='chal'?(L.miss===0?'بدون ولا غلطة!':`عدد الغلطات: ${L.miss}`):'جرّب نفس الدرس في وضع التحدي بدون تلميحات.';
   $('#lenext').style.display=i+1<LESSONS.length?'':'none';
   $('#lenext').onclick=()=>startLesson(i+1);$('#leagain').onclick=()=>startLesson(i);$('#lelist').onclick=()=>lessonsView(mode==='chal');sv('end')},900)}
+// ===== study addon: verify (تحقق) challenge, points to remember, interactive parts =====
+const RM=[
+ ['التشغيل يكون بتدوير مفتاح الأوضاع من OFF إلى PT أو CT، والجهاز يسوي فحص ذاتي تلقائي.','الإطفاء بإرجاع المفتاح إلى OFF.','ركّب السماعة والهوائي قبل التشغيل.'],
+ ['MODE يعرض الأنماط واحد واحد، وENT يختار النمط.','في شاشة القناة تنتقل بين الحقول بـ ◁▷، والحقل المحدد يتظلّل.','أول إرسال على قناة جديدة يسوي توليف للمقرن تلقائي.'],
+ ['القدرة الحقيقية: LOW / MED / HIGH من OPT > RADIO > TX POWER.','استخدم أقل قدرة تكفي للاتصال، توفّر البطارية وتقلل الكشف.'],
+ ['LT يفتح الإضاءة BRIGHT ثم التباين CONTRAST ثم LIGHT OPERATION.','MOMENTARY: الإضاءة تطفي بعد ثواني بدون ضغط وتوفّر البطارية.'],
+ ['OPT > TEST > BIT > SYSTEM يفحص النظام كامل.','TEST PASSED يعني سليم، وأي رقم عطل يُسجّل ويُبلَّغ عنه.'],
+ ['جهد البطارية الطبيعي بين 21 و 30 فولت، والجهاز يطفي لحاله تحت 21.','ENT بعد شاشة البطارية يعرض بطارية الحفظ HUB.'],
+ ['VSWR يقيس توافق الهوائي، والجهاز يرسل أثناء الفحص.','1.5:1 ممتاز، 2:1 يبدأ الجهاز يخفّض القدرة، 3:1 يطلع تحذير.'],
+ ['RETUNE يجبر المقرن يعيد التوليف، استخدمه بعد تغيير الهوائي.','ما يشتغل والجهاز في المسح ALE.'],
+ ['OPT > TEST > SPECIAL > ELAPSED_TIME.','HOURS UP ساعات التشغيل، HOURS TX ساعات الإرسال، ولا تتصفّر أبد.'],
+ ['OPT > GPS-TOD يعرض حالة الـ GPS: NOT INSTALLED أو SEARCHING أو TRACKING.','ENT يتنقل بين الوقت والموقع والسرعة والارتفاع.'],
+ ['الوقت لازم يكون مضبوط قبل HOP و 3G والـ LQA المجدول.','PGM > CONFIG > TOD: فرق التوقيت ثم الثواني الكبيسة ثم التاريخ ثم صيغة الوقت ثم الوقت.'],
+ ['PGM > MODE > PRESET > CHANNEL، والقنوات من 000 إلى 199.','ENT يقبل القيمة الافتراضية، و TX ياخذ نفس تردد RX إذا ضغطت ENT.','القناة 000 هي القناة اليدوية.'],
+ ['CALL يفتح نوع النداء: AUTOMATIC يجرب أفضل قناة حسب نتائج LQA.','LINKED تعني تم الربط، و CLR من الشاشة الرئيسية ينهي الربط.'],
+ ['SOUND إرسال من طرف واحد بعنوانك الذاتي، EXCHANGE تبادل بين محطتين.','النتيجة من 0 إلى 100، و100 أفضل قناة.'],
+ ['مجموعة القنوات هي القنوات اللي يمسحها الجهاز في ALE.','PGM > MODE > ALE > CHAN GROUP > ADD، و CLR ينهي إضافة القنوات.'],
+ ['أنواع القفز: NARROW و WIDE و LIST.','HOP CHANNEL ID و TOD MASK لازم تكون نفسها في كل أجهزة الشبكة.'],
+ ['HOP يحتاج الوقت مضبوط على كل الأجهزة.','CALL > REQUEST يطلب تزامن من محطة، و BROADCAST لكل المحطات.'],
+ ['اسحب المفتاح للخارج ودوّره إلى Z.','التصفير يمسح كل المفاتيح والبرمجة، والتشفير ما يشتغل لين تعيد تحميل المفاتيح.']];
+const TASK=['شغّل الجهاز على PT، وبعد ما تظهر الشاشة الرئيسية أطفئه.','اختر النمط FIX، واختر القناة 001، ثم أرسل بالريشة PTT.','غيّر قدرة الإرسال إلى LOW.','افتح إعدادات الإضاءة وخلّ LIGHT OPERATION على ON.','شغّل الفحص الذاتي BIT للنظام كامل لين يطلع TEST PASSED.','اعرض جهد البطارية ثم جهد بطارية الحفظ HUB.','سوّ فحص VSWR على أي تردد لين تطلع النتيجة.','سوّ إعادة توليف RETUNE لين يكتمل.','اعرض الوقت المنقضي ELAPSED_TIME.','اعرض شاشة GPS-TOD.','برمج الوقت يدويًا وفرق التوقيت +03:00.','برمج القناة 006 على التردد 10.3345 (استقبال وإرسال).','حوّل على ALE، اتصل آليًا بالمحطة 2222 لين LINKED، ثم أنهِ الربط.','سوّ تحليل جودة ربط SOUND.','برمج مجموعة القنوات 01 وفيها القنوات 001 و 002 و 003.','برمج قناة قفز HOP رقم 05 من نوع NARROW.','حوّل على HOP واطلب تزامن REQUEST لين يكتمل.','صفّر الجهاز.'];
+const CHK=[
+ (R,S)=>[!S.has('home')&&'لازم تشغّل الجهاز وتنتظر الشاشة الرئيسية.',R.knob!=='OFF'&&'الجهاز للحين شغّال، رجّع المفتاح إلى OFF.'],
+ (R,S)=>[R.mode!=='FIX'&&'النمط مو FIX.',R.ch!=='001'&&'القناة مو 001.',!S.has('tx')&&'ما أرسلت بالريشة PTT.'],
+ R=>[R.pwr!=='LOW'&&'قدرة الإرسال للحين '+R.pwr+'.'],
+ (R,S)=>[!S.has('lt_2')&&'ما وصلت لـ LIGHT OPERATION.',R.light!=='ON'&&'LIGHT OPERATION مو ON.'],
+ (R,S)=>[!S.has('bitpass')&&'ما اكتمل فحص BIT.'],
+ (R,S)=>[!S.has('bat')&&'ما عرضت جهد البطارية.',!S.has('hub')&&'ما عرضت بطارية الحفظ HUB.'],
+ (R,S)=>[!S.has('vswrres')&&'ما طلعت نتيجة VSWR.'],
+ (R,S)=>[!S.has('tuned')&&'ما اكتملت إعادة التوليف.'],
+ (R,S)=>[!S.has('elapsed')&&'ما عرضت ELAPSED_TIME.'],
+ (R,S)=>[!S.has('gpstod')&&'ما عرضت GPS-TOD.'],
+ R=>[!R.todSet&&'ما خلّصت برمجة الوقت لآخر حقل.',R.cfg.utc!=='+03:00'&&'فرق التوقيت مو +03:00.'],
+ R=>{const c=R.chans['006'];return[!c&&'القناة 006 ما انبرمجت.',c&&c[0]!=='10.3345'&&'تردد الاستقبال مو 10.3345.',c&&c[1]!=='10.3345'&&'تردد الإرسال مو 10.3345.']},
+ (R,S)=>[R.mode!=='ALE'&&'النمط مو ALE.',!S.has('linked')&&'ما تم الربط LINKED.',R.link&&'الربط للحين قائم، أنهِه بـ CLR.'],
+ (R,S)=>[!S.has('sounding')&&'ما سويت SOUND.'],
+ R=>{const g=R.ale.groups['01']||[];return[!g.length&&'المجموعة 01 ما انبرمجت.',g.length&&!['001','002','003'].every(c=>g.includes(c))&&'المجموعة 01 ناقصها قنوات.']},
+ R=>[!R.hop['05']&&'قناة القفز 05 ما انبرمجت.'],
+ R=>[R.mode!=='HOP'&&'النمط مو HOP.',!R.sync&&'ما تم التزامن.'],
+ (R,S)=>[!S.has('zdone')&&'ما اكتمل التصفير.']];
+function startLesson(i){const l=LESSONS[i];L={i,steps:expand(l.s),k:0,miss:0,hint:false,seen:new Set()};prep(l.pre);$('#hnt').classList.remove('on');$('#hnt').textContent='';if(mode==='chal'&&l.pre!=='ale'&&i===14)R.ale.groups={};
+ $('#ltn').textContent=l.t;$('#dhd').textContent='RF-5800H-MP';$('#dsub').textContent=mode==='chal'?'تحدّي · نفّذ ثم اضغط تحقق':'درس موجّه';$('#inst').style.display='';$('#sbtns').style.display='flex';$('#cap').style.display='none';
+ $('#hintb').style.display='none';$('#vfyb').style.display=mode==='chal'?'':'none';
+ const rm=$('#rmbox');rm.innerHTML='<b>📌 نقاط تذكّرها</b>'+(RM[i]||[]).map(x=>'<div>• '+x+'</div>').join('');rm.style.display=(RM[i]||[]).length?'':'none';
+ sv('dev');fit();fixH();renderStep()}
+function renderStep(){document.querySelectorAll('#sim .hl').forEach(e=>e.classList.remove('hl'));if(!L)return;
+ if(mode==='chal'){$('#stn').textContent='المهمة';$('#mst').textContent=L.miss?`محاولات تحقق خاطئة: ${L.miss}`:'';$('#stt').textContent=TASK[L.i]||LESSONS[L.i].t;$('#sbar').style.width='0%';return}
+ const n=L.steps.length,s=L.steps[L.k];if(!s)return;$('#stn').textContent=`الخطوة ${L.k+1} من ${n}`;$('#mst').textContent='';$('#stt').textContent=s.t;$('#sbar').style.width=(L.k/n*100)+'%';
+ $('#hnt').classList.remove('on');const t=target();if(t){const e=$(t);if(e)e.classList.add('hl')}}
+const _lt=lessonTick;lessonTick=function(){if(L&&scr)L.seen.add(scr.tag);if(L&&mode==='chal')return;_lt()};
+const _act=act;act=function(a,k,el){if(L&&mode==='chal'){doAct(a,k);if(scr)L.seen.add(scr.tag);return}_act(a,k,el)};
+function verify(){if(!L)return;const bad=(CHK[L.i]||(()=>[]))(R,L.seen).filter(Boolean);const h=$('#hnt');
+ if(!bad.length){SND.ready&&SND.ready();finish();return}L.miss++;SND.err();h.classList.add('on');h.innerHTML='❌ '+bad[0]+(bad.length>1?` <small>(+${bad.length-1})</small>`:'');renderStep()}
+function finish(){document.querySelectorAll('#sim .hl').forEach(e=>e.classList.remove('hl'));$('#sbar').style.width='100%';
+ const d=store2.get(),key=(mode==='chal'?'c':'g')+L.i;if(d[key]===undefined||L.miss<d[key])d[key]=L.miss;store2.set(d);
+ const i=L.i;setTimeout(()=>{$('#lebig').textContent=mode==='chal'?(L.miss===0?'🏆':'⭐'):'🎉';
+  $('#let').textContent='أكملت: '+LESSONS[i].t;$('#les').textContent=mode==='chal'?(L.miss===0?'صح من أول تحقق!':`تمت بعد ${L.miss} محاولة تحقق خاطئة`):'جرّب نفس المهمة في وضع التحدي وتحقق منها بنفسك.';
+  $('#lenext').style.display=i+1<LESSONS.length?'':'none';
+  $('#lenext').onclick=()=>startLesson(i+1);$('#leagain').onclick=()=>startLesson(i);$('#lelist').onclick=()=>lessonsView(mode==='chal');sv('end')},600)}
+// ---------- interactive parts ----------
+const PARTS={
+ J1:{c:[222,169,58],n:'مقر السماعة AUDIO (J1)',f:'توصَّل فيه السماعة والميكرفون H-250، وفيها ريشة الإرسال PTT.',b:'بدونها ما تقدر تسمع ولا ترسل صوت.'},
+ J2:{c:[154,238,26],n:'مقر الـ GPS (J2)',f:'يوصَّل فيه هوائي GPS أو جهاز تحديد موقع خارجي.',b:'يعطي الجهاز الوقت الدقيق والموقع، ويساعد في القفز الترددي و 3G وإرسال تقارير الموقع.'},
+ J3:{c:[222,377,72],n:'مقر البيانات DATA (J3)',f:'يوصَّل فيه الحاسب أو جهاز البيانات.',b:'للبرمجة بالحاسب RPA ولإرسال واستقبال البيانات والرسائل.'},
+ LCD:{r:[166,82,640,180],n:'الشاشة LCD',f:'تعرض النمط والقناة والترددات والقوائم ونتائج الفحوصات.',b:'منها تعرف حالة الجهاز وكل الإعدادات اللي تغيّرها.'},
+ KDU:{r:[160,212,660,440],n:'لوحة المفاتيح KDU',f:'أرقام وحروف ومفاتيح وظائف.',b:'منها تشغّل وتبرمج الجهاز كامل.',kp:1},
+ J18:{c:[775,176,52],n:'مقر حاقن المفاتيح FILL (J18)',f:'يوصَّل فيه حاقن مفاتيح التشفير.',b:'لتحميل مفاتيح التشفير بسرعة بدل إدخالها يدويًا.'},
+ KNOB:{c:[772,340,78],n:'مفتاح أوضاع التشغيل',f:'OFF · PT · CC · CT · RV · LD · Z',b:'يحدد هل الجهاز طافي أو شغّال بنص مفتوح أو مشفّر، ومنه التصفير.',kp:1},
+ PLATE:{r:[880,95,1060,215],n:'لوحة اسم الجهاز',f:'RF-5800H-MP RECEIVER / TRANSMITTER',b:'يعرّفك بموديل الجهاز: مرسل مستقبل HF محمول.'},
+ J6:{c:[967,377,68],n:'مقر الملحقات ACCESSORY (J6)',f:'يوصَّل فيه مكبر القدرة أو المقرن الخارجي.',b:'يحوّل الجهاز لمحطة ثابتة أو متحركة بقدرة أعلى.'},
+ J7:{c:[1169,182,58],n:'مقر الهوائي ANTENNA (J7)',f:'يوصَّل فيه الهوائي السوطي.',b:'بدون هوائي ما فيه اتصال، والإرسال بدونه قد يضر الجهاز.'},
+ GND:{c:[1253,269,30],n:'مقر التأريض GND',f:'يوصَّل بسلك أرضي.',b:'للحماية من الكهرباء الساكنة وتحسين أداء الهوائي.'},
+ HDL:{r:[0,40,90,480],n:'مقابض الحمل',f:'مقبض على كل جانب.',b:'لحمل الجهاز وحماية الواجهة من الصدمات.'}};
+const KNOBI={OFF:'إطفاء الجهاز.',PT:'تشغيل بنص مفتوح، صوت أو بيانات بدون تشفير.',CC:'غير مستخدم في هذا الجهاز.',CT:'تشغيل بنص مشفّر، يحتاج مفتاح تشفير محمّل.',RV:'غير مستخدم.',LD:'غير مستخدم.',Z:'تصفير: يمسح كل المفاتيح والبرمجة. تسحب المفتاح للخارج ثم تدوّره.'};
+function tourBuild(){const tw=$('#tourwrap');if(tw.dataset.v2)return;tw.dataset.v2=1;tw.querySelectorAll('.tdot').forEach(e=>e.remove());
+ const tt=$('#ttab');if(tt)tt.style.display='none';const sh=$('#sv-tour .shd span');if(sh)sh.textContent='اضغط على أي جزء في الجهاز';
+ for(const id in PARTS){const p=PARTS[id],b=document.createElement('button');b.className='pz'+(p.c?' rnd':'');b.setAttribute('aria-label',p.n);
+  if(p.c)Object.assign(b.style,{left:pct(p.c[0]-p.c[2],FW),top:pct(p.c[1]-p.c[2],FH),width:pct(2*p.c[2],FW),height:pct(2*p.c[2],FH)});
+  else Object.assign(b.style,{left:pct(p.r[0],FW),top:pct(p.r[1],FH),width:pct(p.r[2]-p.r[0],FW),height:pct(p.r[3]-p.r[1],FH)});
+  b.onclick=()=>{tw.querySelectorAll('.pz').forEach(e=>e.classList.remove('on'));b.classList.add('on');
+   $('#tinfo').innerHTML=`<b>${p.n}</b><div><i>وظيفته:</i> ${p.f}</div><div><i>فايدته:</i> ${p.b}</div>`+(p.kp?`<button class="kpgo">🔍 كبّر واستكشف ${id==='KNOB'?'أوضاع المفتاح':'كل زر'}</button>`:'');
+   const g=$('#tinfo .kpgo');if(g)g.onclick=()=>kpOpen(id)};tw.appendChild(b)}
+ $('#tinfo').innerHTML='👆 اضغط على أي جزء في صورة الجهاز: المقرات، الشاشة، لوحة المفاتيح، مفتاح الأوضاع...';
+ const kp=document.createElement('div');kp.id='kpx';kp.innerHTML='<div class="kpw"><img id="kpimg" alt=""></div><div class="tinfo" id="kpinfo"></div><button class="kpback">← رجوع للجهاز كامل</button>';tw.after(kp);
+ $('#kpimg').src=SIMG.kdu;const w=kp.querySelector('.kpw');
+ for(const id in KS){if(['LCD','KNOB','KNOBLAB'].includes(id))continue;const [x,y,ww,h]=KS[id];const mk=(kid,top,hh)=>{const b=document.createElement('button');b.className='pz';Object.assign(b.style,{left:pct(x,KW),top:pct(top,KH),width:pct(ww,KW),height:pct(hh,KH)});
+   b.onclick=()=>{w.querySelectorAll('.pz').forEach(e=>e.classList.remove('on'));b.classList.add('on');$('#kpinfo').innerHTML=`<b>${KEYNAME[kid]||kid}</b><div>${(KEYINFO[kid]||KEYINFO[kid.replace(/[+-]$/,'+')]||'').replace(/<b>.*?<\/b>: /,'')}</div><div class="kx">في الحقول اللي تقبل كتابة يكتب الرقم${KTAP[kid]&&KTAP[kid].length>1?'، والضغط المتكرر يكتب الحروف '+KTAP[kid].slice(1):''}.</div>`};w.appendChild(b)};
+  if(id==='VOL'||id==='PRE'){mk(id+'+',y,h/2);mk(id+'-',y+h/2,h/2)}else mk(id,y,h)}
+ for(const pz in KS.KNOBLAB){const [x,y]=KS.KNOBLAB[pz];const b=document.createElement('button');b.className='pz kl2';b.textContent='';Object.assign(b.style,{left:pct(x-22,KW),top:pct(y-16,KH),width:pct(44,KW),height:pct(32,KH)});
+  b.onclick=()=>{w.querySelectorAll('.pz').forEach(e=>e.classList.remove('on'));b.classList.add('on');$('#kpinfo').innerHTML=`<b>مفتاح الأوضاع: ${pz}</b><div>${KNOBI[pz]||''}</div>`};w.appendChild(b)}
+ kp.querySelector('.kpback').onclick=()=>{kp.classList.remove('on');tw.style.display='';$('#tinfo').style.display=''};}
+function kpOpen(id){const kp=$('#kpx');kp.classList.add('on');$('#tourwrap').style.display='none';$('#tinfo').style.display='none';$('#kpinfo').innerHTML=id==='KNOB'?'👆 اضغط على أي وضع من أوضاع المفتاح (OFF، PT، CT، Z...).':'👆 اضغط على أي زر في لوحة المفاتيح عشان تعرف وظيفته.'}
+
+const _sv=sv;sv=function(id){if(id==='tour')tourBuild();_sv(id)};
+document.addEventListener('click',e=>{if(e.target.closest&&e.target.closest('#vfyb'))verify()});
 function open(){if(!els.lcd)build();sv('home');show('sim')}
 function init(){
  $('#simx').onclick=()=>{clearT();L=null;home()};
