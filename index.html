@@ -816,7 +816,7 @@ function rdef(){return{tod:true,att:{hs:false,ant:false,gps:false,data:false},ke
  cfg:{radio:{},port:{},audio:{AUX:'UNMUTE',SIDE:'UNMUTE'},utc:'+03:00',name:'RF5800',lpc:'ON',acc:{},gps:{},apr:{},ldv:{},arq:{},sms:{},net:{routes:[]}},
  pwr:'HIGH',sql:'MEDIUM',ftype:'TONE',cpl:'ENABLED',silence:'OFF',bfo:0,nb:'OFF',ssb:'YES',scan:false,
  ale:{self:['1111'],indiv:{'2222':'01',TAIF:'01',JEDDAH:'01',RIH:'01'},net:{NET1:{g:'01',self:'1111',mem:['2222','TAIF']}},groups:{'01':['001','002','003']},lqa:{},amd:['MEET AT CP1'],rxamd:[],scores:{}},
- g3:{net:'NET1',plan:'3G DAY',role:'OUTSTATION',stations:['MP2','MP3'],sms:['ROGER','SEND REPORT'],rxsms:[]},
+ g3:{net:'NET1',plan:'3G DAY',role:'OUTSTATION',stations:['2222','TAIF','JEDDAH'],sms:['ROGER','SEND REPORT'],rxsms:[]},
  hopx:{},excl:[],mdm:{MDM1:{name:'SER-2400',type:'SERIAL'},MDM2:{name:'ARQ-AUTO',type:'ARQ'}},
  sys:{SYSPRE1:{name:'FIXNET1',mode:'FIX',ch:'001',mdm:'OFF',enc:'CITADEL',key:'TEK01',ptv:'CLR',ctv:'DV24'},SYSPRE2:{name:'ALENET2',mode:'ALE',ch:'MP1',mdm:'OFF',enc:'CITADEL',key:'TEK01',ptv:'CLR',ctv:'DV24'},
   SYSPRE3:{name:'FIXNET3',mode:'FIX',ch:'002',mdm:'OFF',enc:'NONE',key:'',ptv:'CLR',ctv:'DV24'},SYSPRE4:{name:'HOPNET1',mode:'HOP',ch:'01',mdm:'OFF',enc:'CITADEL',key:'TEK01',ptv:'CLR',ctv:'DV24'},
@@ -961,7 +961,9 @@ function rxLdv(){stack=[];setS(hm('ldvnote','LDV FROM MP2',['LATER','PLAY'],x=>{
 // ---------- PGM ----------
 function pgmMenu(){return hm('pgm','PGM',['COMSEC','CONFIG','MODE','ACCESS','SCHED'],v=>{
  if(v==='COMSEC')return push(comsecMenu());if(v==='CONFIG')return push(configMenu());if(v==='MODE')return push(pmodeMenu());
- if(v==='ACCESS')return push(hm('access','ACCESS',['LOGIN','LOCKOUTS'],x=>{if(x==='LOGIN')return push(cf('alevel','ACCESS LEVEL',['USER1','USER2','USER3','DEPOT'],'USER1',lv=>push(ef('apw',lv+' PASSWORD',{len:8,kind:'alnum',min:1},()=>{R.login=lv;back();back()}))));push(inf('lock',['LOCKOUTS','LOGIN REQUIRED','','']))}));
+ if(v==='ACCESS')return push(hm('access','ACCESS',['LOGIN','LOCKOUTS'],x=>{if(x==='LOGIN')return push(cf('alevel','ACCESS LEVEL',['USER1','USER2','USER3','DEPOT'],'USER1',lv=>push(ef('apw',lv+' PASSWORD',{len:8,kind:'alnum',min:1},()=>{R.login=lv;backTo('access')}))));
+  if(!R.login)return push(inf('lock',['LOCKOUTS','LOGIN REQUIRED','','']));
+  push(hm('lockm','LOCKOUTS',['OPR','PGM','OPT'],y=>push(cf('oprq',y+' OPTIONS OPEN?',YN,'YES',z=>push(inf('oprok',[y+' OPTIONS',z==='YES'?'OPEN':'LOCKED','','CLR=NEXT'],{clr:()=>push(cf('showw','SHOW',['PGM','OPT','ALL'],'PGM',w=>{R.show=w;push(inf('shown',[w+' : SHOW','','','']))}))}))))))}));
  if(v==='SCHED')return push(hm('psched','SCHED',['ADD','REVIEW','DELETE','BROADCAST'],x=>{if(x==='ADD'||x==='BROADCAST')return wiz('sch',[['START HOUR',{len:2,kind:'num',def:'00'}],['INTERVAL (HOURS)',{len:2,kind:'num',def:'06'}]],o=>{R.sched.push(o);stack.pop();stack.pop();setS(stack.pop()||pgmMenu());draw()})();push(inf('schv',['SCHED',R.sched.length?R.sched.length+' ENTRIES':'EMPTY','','']))}))})}
 // return to a given menu tag after wizard
 function backTo(tag){while(stack.length&&stack[stack.length-1].tag!==tag)stack.pop();setS(stack.length?stack.pop():homeS())}
@@ -1092,7 +1094,7 @@ function knob(p){if(R.knob===p)return;const was=R.knob;R.knob=p;clearT();
  if(['CC','RV','LD'].includes(p)){R.on=true;stack=[];setS(inf('notused',['',p+' POSITION','NOT USED','']));return}
  if(!R.on||was==='OFF'||['CC','RV','LD'].includes(was)){R.on=true;stack=[];setS(inf('boot',['RF-5800H-MP','','SELF TEST','IN PROGRESS']));SND.boot();later(1400,()=>{SND.ready();goHome()});return}
  if(scr&&scr.tag==='home'&&p==='CT'&&!R.key)R.key=Object.keys(R.keys)[0]||'';draw()}
-function ptt(){if(!R.on||!scr||R.zero)return;if(!R.att.hs&&R.attReq){flashLCD();return}
+function ptt(){if(!R.on||!scr||R.zero)return;if(scr.tag==='home')R.txd=1;if(!R.att.hs&&R.attReq){flashLCD();return}
  if(scr.tag==='ldvrec'){stack=[];setS(inf('ldvtx',['','SENDING LDV','MESSAGE','']));SND.data();later(1800,()=>{SND.ready();goHome()});return}
  if(scr.tag!=='home')return;if(R.knob==='CT'&&!R.key){setS(inf('nokey',['','KEY NOT AVAILABLE','','']));later(1300,goHome);return}
  if(!R.att.ant&&R.attReq){setS(inf('noant',['','NO ANTENNA','','']));later(1300,goHome);return}
@@ -1188,7 +1190,7 @@ const RM=[
 const TASK=['شغّل الجهاز على PT، وبعد ما تظهر الشاشة الرئيسية أطفئه.','اختر النمط FIX، واختر القناة 001، ثم أرسل بالريشة PTT.','غيّر قدرة الإرسال إلى LOW.','افتح إعدادات الإضاءة وخلّ LIGHT OPERATION على ON.','شغّل الفحص الذاتي BIT للنظام كامل لين يطلع TEST PASSED.','اعرض جهد البطارية ثم جهد بطارية الحفظ HUB.','سوّ فحص VSWR على أي تردد لين تطلع النتيجة.','سوّ إعادة توليف RETUNE لين يكتمل.','اعرض الوقت المنقضي ELAPSED_TIME.','اعرض شاشة GPS-TOD.','برمج الوقت يدويًا وفرق التوقيت +03:00.','برمج القناة 006 على التردد 10.3345 (استقبال وإرسال).','حوّل على ALE، اتصل آليًا بالمحطة 2222 لين LINKED، ثم أنهِ الربط.','سوّ تحليل جودة ربط SOUND.','برمج مجموعة القنوات 01 وفيها القنوات 001 و 002 و 003.','برمج قناة قفز HOP رقم 05 من نوع NARROW.','حوّل على HOP واطلب تزامن REQUEST لين يكتمل.','صفّر الجهاز.'];
 const CHK=[
  (R,S)=>[!S.has('home')&&'لازم تشغّل الجهاز وتنتظر الشاشة الرئيسية.',R.knob!=='OFF'&&'الجهاز للحين شغّال، رجّع المفتاح إلى OFF.'],
- (R,S)=>[R.mode!=='FIX'&&'النمط مو FIX.',R.ch!=='001'&&'القناة مو 001.',!S.has('tx')&&'ما أرسلت بالريشة PTT.'],
+ (R,S)=>[R.mode!=='FIX'&&'النمط مو FIX.',R.ch!=='001'&&'القناة مو 001.',!(R.txd||S.has('tx'))&&'ما أرسلت بالريشة PTT.'],
  R=>[R.pwr!=='LOW'&&'قدرة الإرسال للحين '+R.pwr+'.'],
  (R,S)=>[!S.has('lt_2')&&'ما وصلت لـ LIGHT OPERATION.',R.light!=='ON'&&'LIGHT OPERATION مو ON.'],
  (R,S)=>[!S.has('bitpass')&&'ما اكتمل فحص BIT.'],
