@@ -307,6 +307,7 @@ button{font-family:inherit;cursor:pointer;border:0}
 .wex span{color:var(--ink)}.wex div>b{color:var(--coral);background:#F9E1DA;border-radius:8px;padding:0 8px;font-size:13px;align-self:start}.wex small{grid-column:1/-1;color:var(--teal);font-weight:700;font-size:13px}
 .pgo.alt{background:var(--navy2);box-shadow:0 3px 0 #0f1a2b;margin-top:0}
 #plist .pgo{width:100%;margin:12px 0}
+.ptag .cu1{display:block}.ptag .cu{display:block;font-weight:600;font-size:13.5px;color:#4b5563;margin-top:2px}
 </style></head><body><div class="app">
 <section class="scr" id="hub">
 <div class="hero hub-hero">
@@ -440,28 +441,15 @@ const mast=l=>l.filter(q=>okBank.includes(key(q))).length;
 const starTxt=n=>'★'.repeat(n)+'☆'.repeat(3-n);
 /* ===== أنماط أسئلة RF5800 (نسخة مبسطة) ===== */
 const CUES=[
- ['26 فولت','تشغيل الجهاز',/26/],
- ['21 فولت','يطفي',/(^|\D)21(\D|$)/],
- ['3.6 فولت','الذاكرة',/3\.6|الداعمة|الذاكرة/],
- ['4.5','الوزن',/4\.5|وزن|الوزن/],
- ['50 أوم','غير متوازنة',/أوم|ممانعة/],
- ['125 وات','العربة',/125/],
- ['10 / 50 / 125 وات','الثابتة',/الثابتة.*(وات|الخرج)|(وات|الخرج).*الثابتة/],
- ['1 / 5 / 10 وات','المحمول على الظهر',/^(?!.*(الثابتة|العربة)).*(وات|واطي|الخرج)/],
- ['100','مفاتيح التشفير',/مفتاح تشفير|مفاتيح التشفير/],
- ['CITADEL','32 خانة',/CITADEL/],
- ['DATOTEK','12 خانة',/DATOTEK/],
- ['200','قنوات FIX',/\bFIX|200/],
- ['20','شبكات القفز',/شبك/],
- ['ALE','000 إلى 099',/\bALE\b|الربط الآلي/],
- ['3G','100 إلى 162',/3G|الجيل الثالث/],
- ['المناداة','001 إلى 010',/المناداة|HAILING/],
- ['الهوائي السوطي','3 متر',/سوطي/],
- ['سرج الحمل أو البطاريات','الظهر',/الظهر|سرج/],
- ['مكبر القدرة أو التوليف','العربة',/عربة|مكبر|توليف/],
- ['محول AC','الثابتة',/الثابتة|محول/],
- ['إضاءة الشاشة','LT',/إضاءة|\bLT\b/],
- ['غير مستخدم','CC و RV و LD',/غير مستخدم|الغير مستخدمة|\bCC\b|\bRV\b|\bLD\b/]
+ ['26 فولت','تشغيل الجهاز'],['21 فولت','يطفي'],['3.6 فولت','الذاكرة'],['23 إلى 32 فولت','العربة والثابتة'],
+ ['4.5','الوزن'],['50 أوم','غير متوازنة'],
+ ['1 / 5 / 10 وات','المحمول على الظهر'],['125 وات','العربة'],['10 / 50 / 125 وات','الثابتة'],
+ ['تردد المحمول','1.6 إلى 59.999'],['أنواع التعديل','5: USB · LSB · AME · CW · FM'],
+ ['10 إلى 15 م هـ','الأفضل للمتوسط والبعيد'],['25 إلى 30 م هـ','قصير جدًا'],
+ ['100','مفاتيح التشفير'],['CITADEL','32 خانة'],['DATOTEK','12 خانة'],
+ ['200','قنوات FIX'],['المجموعة','100 قناة'],['20','شبكات القفز'],['ALE','000 إلى 099'],['3G','100 إلى 162'],['العنوان الشخصي','1 إلى 3 (في 3G)'],['المناداة','001 إلى 010'],
+ ['الهوائي السوطي','3 متر'],['سرج الحمل أو البطاريات','الظهر'],['مكبر القدرة أو التوليف','العربة'],['محول AC','الثابتة'],
+ ['إضاءة الشاشة','LT'],['غير مستخدم','CC و RV و LD']
 ];
 const RULES=[
  ['صح أو خطأ','إذا فيها رقم مو مكانه، أو كلمة «فقط»، أو ناقصها شيء ← <b>خطأ</b>. غير كذا ← <b>صح</b>.'],
@@ -478,16 +466,46 @@ const WRONGEX=[
 /* صيغ الصح والخطأ المخبأة في الملاحظات تتحول لأسئلة تدريب */
 function variants(){const out=[];Object.keys(MODES).forEach(k=>D[k].forEach(q=>{const re=/«([^»]+)»\s*←?\s*<b>(صح|خطأ)<\/b>/g;let m;
   while((m=re.exec(q.note||''))){out.push({t:'tf',q:m[1],ans:m[2]==='صح',fix:'',note:'',topic:q.topic,k:'v:'+m[1],v:1})}}));return out}
-function cuesOf(q){const txt=q.q+' '+(q.o||[]).join(' ');return CUES.filter(c=>c[2].test(txt)).slice(0,2)}
+function cueOf(q){const t=q.q,all=t+' '+(q.o||[]).join(' ');const has=re=>re.test(t);
+  if(has(/سوطي/))return[['الهوائي السوطي','3 متر']];
+  if(/مكونات|من المكون/.test(t)){
+    if(/الثابتة|مركز/.test(t))return[['محول AC','الثابتة']];
+    if(/عربة|العربة/.test(t))return[['مكبر القدرة أو التوليف','العربة']];
+    if(/الظهر|المحمول/.test(t))return[['سرج الحمل أو البطاريات','الظهر']];
+    return[]}
+  if(has(/CITADEL|DATOTEK/)&&/خان|حرف/.test(all))return[['CITADEL','32 خانة'],['DATOTEK','12 خانة']];
+  if(has(/مفتاح تشفير|مفاتيح التشفير/))return[['100','مفاتيح التشفير']];
+  if(has(/يتغذى|26 فولت/))return[['26 فولت','تشغيل الجهاز']];
+  if(has(/23 – 32|23 - 32/))return[['23 إلى 32 فولت','العربة والثابتة']];
+  if(has(/يغلق الجهاز|21 فولت/))return[['21 فولت','يطفي']];
+  if(has(/3\.6|الداعمة/))return[['3.6 فولت','الذاكرة']];
+  if(has(/وزن|الوزن/))return[['4.5','الوزن']];
+  if(has(/أوم|ممانعة/))return[['50 أوم','غير متوازنة']];
+  if(has(/(^|\s)وات|الخرج|واطي/)){
+    if(/الثابتة/.test(t))return[['10 / 50 / 125 وات','الثابتة']];
+    if(/عربة|العربة/.test(t))return[['125 وات','العربة']];
+    return[['1 / 5 / 10 وات','المحمول على الظهر']]}
+  if(has(/1\.6|التردد المحمول|تردد المحمول|تردد المحطة/))return[['تردد المحمول','1.6 إلى 59.999']];
+  if(has(/التعديل/))return[['أنواع التعديل','5: USB · LSB · AME · CW · FM']];
+  if(has(/النطاق (من|الأفضل)|قصير المدى/))return[['10 إلى 15 م هـ','الأفضل للمتوسط والبعيد'],['25 إلى 30 م هـ','قصير جدًا']];
+  if(has(/العنوان الشخصي/))return[['العنوان الشخصي','1 إلى 3 (في 3G)']];
+  if(has(/شبك/))return[['20','شبكات القفز']];
+  if(has(/قنا|القنوات|000 \/ 199/)&&has(/FIX|الثابت|SSB/))return[['FIX','200 قناة (000 إلى 199)']];
+  if(has(/مجموع/))return[['المجموعة','100 قناة']];
+  if(has(/المناداة|HAILING/))return[['المناداة','001 إلى 010']];
+  if(has(/قنا|القنوات/)&&has(/ALE|الربط الآلي|3G|الجيل الثالث/))return[['ALE','000 إلى 099'],['3G','100 إلى 162']];
+  if(has(/إضاءة/))return[['إضاءة الشاشة','LT']];
+  if(has(/غير مستخدم|الغير مستخدمة|\(CC\)|\(LD\)|\(RV\)/))return[['غير مستخدم','CC و RV و LD']];
+  return[]}
 function patLine(q){if(CUR!=='rf')return'';const a=[];
   if(q.t==='tf')a.push(q.ans?'💡 ما فيها شيء غلط ← صح':(/فقط/.test(q.q)?'💡 فيها «فقط» ← خطأ':'💡 فيها رقم أو كلمة مو مكانها ← خطأ'));
   else if(q.t==='mc')a.push('💡 اختر 3 واترك الغريب');
-  const c=cuesOf(q).map(c=>`${c[0]} ← ${c[1]}`).join(' · ');if(c)a.push('📌 تذكّر: '+c);
-  if(!a.length)return'';return`<span class="ptag">${a[0]}${a[1]?'<em>'+a[1]+'</em>':''}</span>`}
+  const cu=cueOf(q).map(x=>`<span class="cu">📌 <bdi>${x[0]}</bdi> ← <bdi>${x[1]}</bdi></span>`).join('');
+  if(!a.length&&!cu)return'';return`<span class="ptag">${a.length?'<span class="cu1">'+a[0]+'</span>':''}${cu}</span>`}
 function showPats(){stopTimer();const box=$('#plist');
   const tf=[...D.tf,...variants()],mc=D.mc;
   box.innerHTML=`<div class="sbox"><h4>٣ قواعد بس</h4><ol class="srule">${RULES.map(r=>`<li><b>${r[0]}:</b> ${r[1]}</li>`).join('')}</ol></div>
-  <div class="sbox"><h4>إذا شفت ← الجواب</h4><div class="cues">${CUES.map(c=>`<div><span>${c[0]}</span><i>←</i><b>${c[1]}</b></div>`).join('')}</div></div>
+  <div class="sbox"><h4>إذا شفت ← الجواب</h4><div class="cues">${CUES.map(c=>`<div><span><bdi>${c[0]}</bdi></span><i>←</i><b><bdi>${c[1]}</bdi></b></div>`).join('')}</div></div>
   <div class="sbox"><h4>يعني إيش «رقم مو مكانه»؟</h4><p class="sp2">الرقم صحيح وموجود في الجهاز، بس حطوه لشيء ثاني:</p><div class="wex">${WRONGEX.map(w=>`<div><span>«${w[0]}»</span><b>خطأ</b><small>${w[1]}</small></div>`).join('')}</div></div>
   <button class="pgo" id="ptf">تدرّب على صح أو خطأ · ${tf.length} سؤال</button>
   <button class="pgo alt" id="pmc">تدرّب على اختر أكثر من إجابة · ${mc.length} سؤال</button>`;
