@@ -297,6 +297,16 @@ button{font-family:inherit;cursor:pointer;border:0}
 .pgo{display:block;width:calc(100% - 28px);margin:12px 14px 14px;padding:12px;border-radius:12px;font-weight:900;font-size:15px;background:var(--teal2);color:#fff;box-shadow:0 3px 0 var(--teal)}
 .ptag{display:block;margin-top:8px;background:var(--sand2);border-right:4px solid var(--gold);border-radius:10px;padding:6px 10px;font-size:13.5px;font-weight:900;color:var(--navy);line-height:1.6}
 .ptag em{display:block;font-style:normal;font-weight:500;font-size:12.5px;color:#5b6573}
+.sbox{background:#fff;border-radius:16px;padding:12px 14px;margin-bottom:12px;box-shadow:0 4px 0 rgba(0,0,0,.18);color:var(--ink)}
+.sbox h4{margin:0 0 8px;font-size:17px;font-weight:900;color:var(--navy)}
+.srule{margin:0;padding:0 20px 0 0;font-size:15.5px;line-height:1.9}.srule li{margin-bottom:6px}.srule b{color:var(--navy)}
+.cues div{display:flex;align-items:center;gap:8px;padding:7px 2px;border-bottom:1px solid var(--line);font-size:15px}.cues div:last-child{border-bottom:0}
+.cues span{flex:1;font-weight:800;color:var(--navy)}.cues i{font-style:normal;color:var(--gold);font-weight:900}.cues b{flex:1;color:var(--teal);font-weight:900}
+.sp2{margin:0 0 6px;font-size:14px;color:var(--mute)}
+.wex div{display:grid;grid-template-columns:1fr auto;gap:2px 8px;padding:8px 0;border-bottom:1px solid var(--line);font-size:14.5px}.wex div:last-child{border-bottom:0}
+.wex span{color:var(--ink)}.wex div>b{color:var(--coral);background:#F9E1DA;border-radius:8px;padding:0 8px;font-size:13px;align-self:start}.wex small{grid-column:1/-1;color:var(--teal);font-weight:700;font-size:13px}
+.pgo.alt{background:var(--navy2);box-shadow:0 3px 0 #0f1a2b;margin-top:0}
+#plist .pgo{width:100%;margin:12px 0}
 </style></head><body><div class="app">
 <section class="scr" id="hub">
 <div class="hero hub-hero">
@@ -328,8 +338,8 @@ button{font-family:inherit;cursor:pointer;border:0}
 <div class="rgrid" id="rgrid"></div>
 </section>
 <section class="scr" id="pats">
-<div class="rh"><button class="x2" id="pback" aria-label="رجوع">→</button><div><b>أنماط الأسئلة</b><span>إذا جاك كذا ← الجواب غالبًا كذا</span></div></div>
-<div class="pint">هذي الأنماط اللي تتكرر في أسئلة المدرب. افتح النمط، احفظ قاعدته، وبعدين اضغط «تدرّب على هذا النمط». وفي الجولات، بعد كل سؤال يطلع لك النمط اللي يحلّه.</div>
+<div class="rh"><button class="x2" id="pback" aria-label="رجوع">→</button><div><b>أنماط الأسئلة</b><span>طريقة سهلة تعرف فيها الجواب</span></div></div>
+<div class="pint">احفظ الثلاث قواعد والقائمة، وبعدين تدرّب. وفي الجولات، بعد كل سؤال تطلع لك تلميحة قصيرة.</div>
 <div id="plist"></div>
 </section>
 <section class="scr" id="play">
@@ -428,62 +438,61 @@ function rounds(){const A=ALLQ(),M=new Map(A.map(q=>[key(q),q]));let o=store.get
   const n=Math.ceil(A.length/RS),R=[];for(let i=0;i<n;i++){R.push(o.slice(Math.round(i*o.length/n),Math.round((i+1)*o.length/n)).map(k=>M.get(k)))}return R}
 const mast=l=>l.filter(q=>okBank.includes(key(q))).length;
 const starTxt=n=>'★'.repeat(n)+'☆'.repeat(3-n);
-/* ===== أنماط أسئلة RF5800 ===== */
-const PATS=[
- {id:'keys',ic:'🎛',t:'المفاتيح وأوضاع التشغيل',
-  rule:'إذا جاك سؤال عن مفتاح أو وضع في مفتاح التشغيل ← طابق الحرف مع وظيفته من الجدول. وانتبه: LD غير مستخدم، والإضاءة مفتاحها LT.',
-  tbl:[['LT','إضاءة الشاشة'],['ENT','إدخال الأمر بعد كل تغيير'],['PGM','البدء في البرمجة'],['MODE','اختيار الوضع FIX / HOP / ALE / 3G'],['↻','التنقل بين PRESET والقنوات والصفر'],['Z','تصفير الجهاز (اسحب المفتاح للخارج ثم لليمين)'],['PT','نص مفتوح (صوت أو بيانات) — مستخدم'],['CT','نص مشفّر — مستخدم'],['CC · RV · LD','غير مستخدمة']],
-  m:q=>/مفتاح|\bMODE\b|\bPGM\b|\(LD\)|\(CT\)|\(PT\)|\(CC\)|\bLT\b|\bENT\b|الأسهم/.test(q.q)&&!/التشفير|تشفير/.test(q.q)},
- {id:'chan',ic:'📶',t:'القنوات والأوضاع',
-  rule:'إذا جاك رقم قنوات أو شبكات أو مجموعات ← كل وضع له مداه الثابت. أي رقم ثاني (مثل 200 قناة في المجموعة أو 25 شبكة) ← خطأ.',
-  tbl:[['FIX / SSB / SCAN','000 – 199 (200 قناة)'],['ALE (الربط الآلي)','000 – 099'],['3G (الجيل الثالث)','100 – 162'],['المناداة HAILING','001 – 010'],['مجموعات القنوات','50 مجموعة (00 – 49) × 100 قناة'],['HOP (القفز)','20 شبكة (00 – 19)، مضاعفات 5 KHz'],['العنوان الشخصي','1 – 3 حرف/رقم في 3G'],['ALE مقابل 3G','3G ما يتبرمج من لوحة المفاتيح، وما له حد لقنوات المسح']],
-  m:q=>/قنا|القنوات|شبك|مجموع|\b3G\b|\bALE\b|\bHOP\b|القفز|الربط الآلي|الجيل الثالث|HAILING|المناداة|\bFIX\b|الوضع الآلي|الوضع الثابت/.test(q.q)},
- {id:'stat',ic:'🎒',t:'المكونات حسب نوع المحطة',
-  rule:'إذا جاك «من مكونات…» ← دوّر على الكلمة المفتاحية: كل قطعة لها محطتها. الخيار اللي يتبع محطة ثانية هو الغلط.',
-  tbl:[['محمول على الظهر','سرج الحمل · بطاريتين · صندوق البطاريات · هوائي سوطي 3م و7 وصلات وقاعدة صلبة · سماعة · كيبل لوحة المفاتيح · هوائي GPS'],['العربة','مكبر القدرة · وحدة توليف الهوائي · توصيلات المكبر مع الراديو والتوليف'],['الثابتة','كل مكونات العربة + محول AC TO DC + التوصيلتين 9831 و9833 + سماعة مكبرة']],
-  m:q=>/مكونات|من المكون/.test(q.q)},
- {id:'band',ic:'🌐',t:'النطاقات والعوامل المؤثرة',
-  rule:'10 – 15 م هـ ← الأفضل للمتوسط والبعيد. 25 – 30 م هـ ← قصير جدًا. وإذا السؤال «عوامل مؤثرة» ← كل الخيارات المنطقية صح، والشاذ (مثل لون الجهاز) غلط.',
-  m:q=>/النطاق (من|الأفضل)|قصير المدى|العوامل/.test(q.q)},
- {id:'num',ic:'🔢',t:'الأرقام: كل رقم لصاحبه',
-  rule:'الخيارات الغلط مأخوذة من أرقام نفس الجهاز. إذا شفت رقم ← اسأل نفسك: هذا الرقم يتبع أي شيء؟ إذا مكانه غلط ← خطأ.',
-  tbl:[['26 فولت','تشغيل الجهاز من البطارية الجافة BB-590'],['21 فولت','يطفي الجهاز إذا نزل الجهد تحته'],['3.6 فولت','البطارية الداعمة (تحفظ الذاكرة)'],['23 – 32 فولت','العربة (من بطاريتها) والثابتة (بمحول)'],['50 أوم','ممانعة الدخل والخرج — غير متوازنة'],['4.5 كجم','وزن الجهاز'],['1 / 5 / 10 وات','المحمول: واطي / متوسط / عالي'],['125 وات','العربة (عالي)'],['10 / 50 / 125 وات','المحطة الثابتة'],['1.6 – 59.999 م هـ','تردد المحمول (FM من 20)'],['100 مفتاح','مفاتيح التشفير، كل مفتاح 32 حرف ورقم'],['CITADEL 32 · DATOTEK 12','خانات مفتاح التشفير'],['75','تضبيط مسبق'],['234 ÷ التردد','طول الهوائي بالقدم، و÷3.28 للمتر'],['ساعتين / 6 ساعات','تحديث التوقيت مع GPS / يدوي'],['3:1','نسبة الموجات: أكثر منها ← أغلق وافحص'],['5 أنواع','التعديل: USB · LSB · AME · CW · FM']],
-  m:q=>/\d|التعديل/.test(q.q+(q.o||[]).join(' '))},
- {id:'only',ic:'⚠️',t:'«فقط» أو قائمة ناقصة',
-  rule:'إذا العبارة فيها «فقط» أو انحذف عنصر من قائمة تعرفها (قصيرة ومتوسطة بدون بعيدة) ← غالبًا خطأ.',
-  m:q=>q.t==='tf'&&!q.ans&&(/فقط|ومتوسطة»?$|متوسطة\.?$|وتردد رقمي/.test(q.q))},
- {id:'swap',ic:'🔁',t:'رقم أو كلمة متبدّلة',
-  rule:'العبارة الخطأ هي نفس الصحيحة بتغيير شيء واحد: رقم (25 شبكة بدل 20، 4 متر بدل 3، 200 قناة بدل 100) أو كلمة شبيهة (فحص↔فصل، مرنة↔صلبة، متوازنة↔غير متوازنة، HF↔VHF، يتغير↔لا يتغير، الجافة↔العربة) ← خطأ.',
-  m:q=>q.t==='tf'&&!q.ans},
- {id:'odd',ic:'☰',t:'اختر أكثر من إجابة: شيل الشاذ',
-  rule:'الغالب 3 من 4 صح. شيل الخيار اللي يتبع محطة ثانية، أو فيه كلمة محرّفة، أو حشو واضح. وإذا السؤال «أنواع العمل» أو «العوامل» ← غالبًا الأربعة صح.',
-  m:q=>q.t==='mc'},
- {id:'dflt',ic:'✅',t:'الصح والخطأ: الأصل صح',
-  rule:'إذا العبارة طويلة ومنقولة بتفاصيلها وما فيها رقم أو كلمة غريبة ← غالبًا صح. أغلب عبارات المدرب صحيحة.',
-  m:q=>q.t==='tf'&&q.ans}
+/* ===== أنماط أسئلة RF5800 (نسخة مبسطة) ===== */
+const CUES=[
+ ['26 فولت','تشغيل الجهاز',/26/],
+ ['21 فولت','يطفي',/(^|\D)21(\D|$)/],
+ ['3.6 فولت','الذاكرة',/3\.6|الداعمة|الذاكرة/],
+ ['4.5','الوزن',/4\.5|وزن|الوزن/],
+ ['50 أوم','غير متوازنة',/أوم|ممانعة/],
+ ['125 وات','العربة',/125/],
+ ['10 / 50 / 125 وات','الثابتة',/الثابتة.*(وات|الخرج)|(وات|الخرج).*الثابتة/],
+ ['1 / 5 / 10 وات','المحمول على الظهر',/^(?!.*(الثابتة|العربة)).*(وات|واطي|الخرج)/],
+ ['100','مفاتيح التشفير',/مفتاح تشفير|مفاتيح التشفير/],
+ ['CITADEL','32 خانة',/CITADEL/],
+ ['DATOTEK','12 خانة',/DATOTEK/],
+ ['200','قنوات FIX',/\bFIX|200/],
+ ['20','شبكات القفز',/شبك/],
+ ['ALE','000 إلى 099',/\bALE\b|الربط الآلي/],
+ ['3G','100 إلى 162',/3G|الجيل الثالث/],
+ ['المناداة','001 إلى 010',/المناداة|HAILING/],
+ ['الهوائي السوطي','3 متر',/سوطي/],
+ ['سرج الحمل أو البطاريات','الظهر',/الظهر|سرج/],
+ ['مكبر القدرة أو التوليف','العربة',/عربة|مكبر|توليف/],
+ ['محول AC','الثابتة',/الثابتة|محول/],
+ ['إضاءة الشاشة','LT',/إضاءة|\bLT\b/],
+ ['غير مستخدم','CC و RV و LD',/غير مستخدم|الغير مستخدمة|\bCC\b|\bRV\b|\bLD\b/]
 ];
-const PORD=['only','swap','keys','chan','stat','band','num','odd','dflt'];
-const PBY=Object.fromEntries(PATS.map(p=>[p.id,p]));
-function patsOf(q){const r=PORD.filter(id=>PBY[id].m(q));return r.length?r:['dflt']}
+const RULES=[
+ ['صح أو خطأ','إذا فيها رقم مو مكانه، أو كلمة «فقط»، أو ناقصها شيء ← <b>خطأ</b>. غير كذا ← <b>صح</b>.'],
+ ['اختر أكثر من إجابة','اختر <b>3</b> واترك الخيار الغريب.'],
+ ['سؤال فيه رقم','طابقه مع قائمة «إذا شفت ← الجواب».']
+];
+const WRONGEX=[
+ ['يمكن برمجة <b>25</b> شبكة في القفز','الصحيح 20 شبكة'],
+ ['المجموعة فيها <b>200</b> قناة','الصحيح 100 قناة، والـ200 هي قنوات FIX'],
+ ['الخرج العالي للمحمول <b>5</b> وات','الـ5 هي المتوسط، والعالي 10'],
+ ['مفتاح DATOTEK من <b>32</b> خانة','الـ32 حق CITADEL، وDATOTEK من 12'],
+ ['الهوائي طوله <b>4</b> متر','طوله 3 أمتار']
+];
 /* صيغ الصح والخطأ المخبأة في الملاحظات تتحول لأسئلة تدريب */
 function variants(){const out=[];Object.keys(MODES).forEach(k=>D[k].forEach(q=>{const re=/«([^»]+)»\s*←?\s*<b>(صح|خطأ)<\/b>/g;let m;
   while((m=re.exec(q.note||''))){out.push({t:'tf',q:m[1],ans:m[2]==='صح',fix:'',note:'',topic:q.topic,k:'v:'+m[1],v:1})}}));return out}
-function patPool(){return[...ALLQ(),...variants()]}
-function patLine(q){if(CUR!=='rf')return'';const ids=patsOf(q),sh=[ids[0]];if(q.t==='mc'&&ids[0]!=='odd')sh.push('odd');
-  return sh.map(id=>{const p=PBY[id];return`<span class="ptag">${p.ic} نمط: ${p.t}<em>${p.rule}</em></span>`}).join('')}
-function ansTxt(q){if(q.t==='tf')return q.ans?'صح':'خطأ';return q.c.map(i=>q.o[i]).join(' · ')}
-function showPats(){stopTimer();const pool=patPool(),box=$('#plist');box.innerHTML='';
-  PATS.forEach(p=>{const L2=pool.filter(q=>patsOf(q).includes(p.id));if(!L2.length)return;
-    const d=document.createElement('details');d.className='pcard';
-    const tb=p.tbl?`<table class="ptbl">${p.tbl.map(r=>`<tr><th>${r[0]}</th><td>${r[1]}</td></tr>`).join('')}</table>`:'';
-    const ex=L2.slice(0,40).map(q=>`<li><span>${q.q}</span><b class="${q.t==='tf'?(q.ans?'y':'n'):''}">${ansTxt(q)}</b></li>`).join('');
-    d.innerHTML=`<summary><i>${p.ic}</i><div><b>${p.t}</b><span>${L2.length} سؤال</span></div><em>▾</em></summary>
-     <div class="prule"><small>القاعدة</small>${p.rule}</div>${tb}
-     <div class="pex"><small>أمثلة من الأسئلة</small><ul>${ex}</ul></div>
-     <button class="pgo">تدرّب على هذا النمط · ${L2.length} سؤال</button>`;
-    d.querySelector('.pgo').onclick=()=>start(L2,'نمط: '+p.t);box.appendChild(d)});
+function cuesOf(q){const txt=q.q+' '+(q.o||[]).join(' ');return CUES.filter(c=>c[2].test(txt)).slice(0,2)}
+function patLine(q){if(CUR!=='rf')return'';const a=[];
+  if(q.t==='tf')a.push(q.ans?'💡 ما فيها شيء غلط ← صح':(/فقط/.test(q.q)?'💡 فيها «فقط» ← خطأ':'💡 فيها رقم أو كلمة مو مكانها ← خطأ'));
+  else if(q.t==='mc')a.push('💡 اختر 3 واترك الغريب');
+  const c=cuesOf(q).map(c=>`${c[0]} ← ${c[1]}`).join(' · ');if(c)a.push('📌 تذكّر: '+c);
+  if(!a.length)return'';return`<span class="ptag">${a[0]}${a[1]?'<em>'+a[1]+'</em>':''}</span>`}
+function showPats(){stopTimer();const box=$('#plist');
+  const tf=[...D.tf,...variants()],mc=D.mc;
+  box.innerHTML=`<div class="sbox"><h4>٣ قواعد بس</h4><ol class="srule">${RULES.map(r=>`<li><b>${r[0]}:</b> ${r[1]}</li>`).join('')}</ol></div>
+  <div class="sbox"><h4>إذا شفت ← الجواب</h4><div class="cues">${CUES.map(c=>`<div><span>${c[0]}</span><i>←</i><b>${c[1]}</b></div>`).join('')}</div></div>
+  <div class="sbox"><h4>يعني إيش «رقم مو مكانه»؟</h4><p class="sp2">الرقم صحيح وموجود في الجهاز، بس حطوه لشيء ثاني:</p><div class="wex">${WRONGEX.map(w=>`<div><span>«${w[0]}»</span><b>خطأ</b><small>${w[1]}</small></div>`).join('')}</div></div>
+  <button class="pgo" id="ptf">تدرّب على صح أو خطأ · ${tf.length} سؤال</button>
+  <button class="pgo alt" id="pmc">تدرّب على اختر أكثر من إجابة · ${mc.length} سؤال</button>`;
+  $('#ptf').onclick=()=>start(tf,'تدريب الأنماط · صح أو خطأ');$('#pmc').onclick=()=>start(mc,'تدريب الأنماط · اختر أكثر من إجابة');
   show('pats')}
-
 function home(){
   stopTimer();
   const all=ALLQ(),R=rounds(),RSt=store.get('rstars',{});
@@ -492,7 +501,7 @@ function home(){
   $('#main').innerHTML=`<button class="hero-btn"><div class="hb-t"><b>${started?'كمّل المذاكرة':'ابدأ المذاكرة'}</b><span>${R.length} جولات قصيرة · ${RS} سؤال تقريبًا في كل جولة</span></div><i>▶</i>
   <div class="hb-p"><div><i style="width:${p}%"></i></div><span>أكملت ${doneR} من ${R.length} جولات</span></div></button>`;
   $('#main .hero-btn').onclick=showRounds;
-  if(CUR==='rf'){const sb=document.createElement('button');sb.className='simbtn';sb.innerHTML=`<img src="${SIMG.full}" alt=""><div><b>محاكي الجهاز 📻</b><span>تعلّم تشغيل وبرمجة RF-5800 خطوة بخطوة من كتالوج الشركة الأم</span></div>`;sb.onclick=()=>SIM.open();$('#main').prepend(sb);const pb=document.createElement('button');pb.className='patbtn';pb.innerHTML=`<i>🧠</i><div><b>أنماط الأسئلة</b><span>اعرف الجواب من شكل السؤال · إذا جاك كذا ← الجواب كذا</span></div>`;pb.onclick=showPats;$('#main').appendChild(pb)}
+  if(CUR==='rf'){const sb=document.createElement('button');sb.className='simbtn';sb.innerHTML=`<img src="${SIMG.full}" alt=""><div><b>محاكي الجهاز 📻</b><span>تعلّم تشغيل وبرمجة RF-5800 خطوة بخطوة من كتالوج الشركة الأم</span></div>`;sb.onclick=()=>SIM.open();$('#main').prepend(sb);const pb=document.createElement('button');pb.className='patbtn';pb.innerHTML=`<i>🧠</i><div><b>أنماط الأسئلة</b><span>٣ قواعد وقائمة «إذا شفت ← الجواب»</span></div>`;pb.onclick=showPats;$('#main').appendChild(pb)}
   const wq=all.filter(q=>wrongBank.includes(key(q)));
   const duo=$('#duo');duo.innerHTML=`<button id="bx"><i>⏱</i><b>اختبار تجريبي</b><span>${exN()} سؤال · ${SUBJ[CUR].exam.min} دقيقة</span></button><button id="bw" ${wq.length?'':'disabled'}><i>↺</i><b>أخطائي</b><span>${wq.length?wq.length+' سؤال':'لا يوجد'}</span></button>`;
   $('#bx').onclick=()=>startExam(all);$('#bw').onclick=()=>start(shuffle(wq),'أخطائي');
