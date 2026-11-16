@@ -815,7 +815,7 @@ function after(tag,lines,ms,fn){stack=stack;setS(inf(tag,lines,{ent:()=>{},clr:(
 function rdef(){return{tod:true,att:{hs:false,ant:false,gps:false,data:false},keys:{TEK01:{t:'CITADEL',h:'0'.repeat(32),avs:null,u:0},TEK02:{t:'CITADEL',h:'1'.repeat(32),avs:null,u:0}},key:'TEK01',mi:'DEFAULT',
  cfg:{radio:{},port:{},audio:{AUX:'UNMUTE',SIDE:'UNMUTE'},utc:'+03:00',name:'RF5800',lpc:'ON',acc:{},gps:{},apr:{},ldv:{},arq:{},sms:{},net:{routes:[]}},
  pwr:'HIGH',sql:'MEDIUM',ftype:'TONE',cpl:'ENABLED',silence:'OFF',bfo:0,nb:'OFF',ssb:'YES',scan:false,
- ale:{self:['1111'],indiv:{'2222':'01',TAIF:'01',JEDDAH:'01',RIH:'01'},net:{NET1:{g:'01',self:'1111',mem:['2222','TAIF']}},groups:{'01':['001','002','003']},lqa:{},amd:['MEET AT CP1'],rxamd:[],scores:{}},
+ ale:{self:['1111'],indiv:{'2222':'01',TAIF:'01',JEDDAH:'01',RIH:'01'},net:{NET1:{g:'01',self:'1111',mem:['2222','TAIF']}},groups:{'02':['004','005']},lqa:{},amd:['MEET AT CP1'],rxamd:[],scores:{}},
  g3:{net:'NET1',plan:'3G DAY',role:'OUTSTATION',stations:['2222','TAIF','JEDDAH'],sms:['ROGER','SEND REPORT'],rxsms:[]},
  hopx:{},excl:[],mdm:{MDM1:{name:'SER-2400',type:'SERIAL'},MDM2:{name:'ARQ-AUTO',type:'ARQ'}},
  sys:{SYSPRE1:{name:'FIXNET1',mode:'FIX',ch:'001',mdm:'OFF',enc:'CITADEL',key:'TEK01',ptv:'CLR',ctv:'DV24'},SYSPRE2:{name:'ALENET2',mode:'ALE',ch:'MP1',mdm:'OFF',enc:'CITADEL',key:'TEK01',ptv:'CLR',ctv:'DV24'},
@@ -843,7 +843,7 @@ function homeS(){TREE=null;const s={tag:'home',kind:'home',
   if(k==='7'){TREE='opt';return push(optMenu())}if(k==='8'){TREE='pgm';return push(pgmMenu())}if(k==='3')return push(modeSel());if(k==='2')return push(ltFlow());
   if(k==='1')return callFlow();if(k==='4'){R.sq=!R.sq;return}if(k==='5'){return}
   if(k==='VOL+'){R.vol=Math.min(9,R.vol+1);return}if(k==='VOL-'){R.vol=Math.max(0,R.vol-1);return}
-  if(k==='PRE+'||k==='PRE-'){const ks=modePres();if(!ks.length){flashLCD();return}let i=ks.indexOf('SYSPRE'+R.pre);i=k==='PRE+'?(i+1)%ks.length:(i-1+ks.length)%ks.length;R.pre=+ks[i].slice(6);R.sysOv=false;applyPre();R.hailed=false;return}
+  if(k==='PRE+'||k==='PRE-'){const ks=modePres();if(!ks.length){flashLCD();return}let i=ks.indexOf('SYSPRE'+R.pre);i=k==='PRE+'?(i+1)%ks.length:(i-1+ks.length)%ks.length;R.pre=+ks[i].slice(6);R.preMoved=1;R.sysOv=false;applyPre();R.hailed=false;return}
   if(k==='CLR'){if(R.mode==='ALE'&&R.link)return push(cf('term','TERMINATE LINK?',['NO','YES'],'NO',v=>{if(v==='YES'){R.link=null;setS(inf('termd',['','LINK TERMINATED','','']));later(1200,goHome)}else back()}));
    if(R.mode.startsWith('3G')&&R.link){R.link=null;return}
    if(R.mode==='FIX'){if(R.ssb!=='YES'){flashLCD();return}R.scan=!R.scan;return}return}
@@ -1036,7 +1036,7 @@ function modemProg(){const ms=Object.keys(R.mdm);const all=[];for(let i=1;i<=20;
   ['MODEM TYPE',['SERIAL','ARQ','AUTO','WBFSK','FSK-N','FSK-W','HFNET','STANAG-4285-C','MIL-110B','XDL']],
   x=>x['MODEM TYPE']==='ARQ'||x['MODEM TYPE']==='AUTO'?['ARQ TYPE',['NON-ARQ','ARQ']]:['DATA RATE',['2400','1200','600','300','150','75']],
   ['INTERLEAVE',['SHORT','LONG','ZERO']],['DATA MODE',['ASYNC','SYNC']],['DATA BITS',['8','7','6','5']],['STOP BITS',['1','2']],['PARITY',['NONE','EVEN','ODD']],['ENABLE',YN]],
-  o=>{R.mdm[o['MODEM PRESET TO CHANGE']]={name:o['PRESET NAME'].trim(),type:o['MODEM TYPE']};backTo('ppreset')})()}
+  o=>{R.mdmSet=1;R.mdm[o['MODEM PRESET TO CHANGE']]={name:o['PRESET NAME'].trim(),type:o['MODEM TYPE']};backTo('ppreset')})()}
 function sysProg(){const all=[];for(let i=1;i<=10;i++)all.push('SYSPRE'+i);
  wiz('psys',[['SYSTEM PRESET TO CHANGE',all],x=>['PRESET NAME',{len:9,kind:'alnum',def:(R.sys[x['SYSTEM PRESET TO CHANGE']]||{}).name||x['SYSTEM PRESET TO CHANGE']}],
   ['RADIO MODE',['FIX','3G','ALE','HOP','3G+']],
@@ -1044,7 +1044,7 @@ function sysProg(){const all=[];for(let i=1;i<=10;i++)all.push('SYSPRE'+i);
   ['MODEM PRESET',['OFF',...Object.keys(R.mdm)]],['ENCRYPTION TYPE',['CITADEL','DATOTEK','NONE']],
   x=>x['ENCRYPTION TYPE']==='NONE'?null:['ENCRYPTION KEY',KEYNAMES()],
   ['PT VOICE MODE',['CLR','CVSD','AVS','DV24','DV6','ME24','ME6','NONE']],['CT VOICE MODE',['DV24','DV6','ME6','ME24','CVSD','NONE']],['ENABLE',YN]],
-  o=>{const m=o['RADIO MODE'];R.sys[o['SYSTEM PRESET TO CHANGE']]={name:o['PRESET NAME'].trim(),mode:m,ch:o.CHANNEL||o['HOP CHANNEL']||o['ASSOC SELF ADDRESS']||o['3G NET'],mdm:o['MODEM PRESET'],enc:o['ENCRYPTION TYPE'],key:o['ENCRYPTION KEY']||'',ptv:o['PT VOICE MODE'],ctv:o['CT VOICE MODE']};backTo('ppreset')})()}
+  o=>{R.sysSet=1;const m=o['RADIO MODE'];R.sys[o['SYSTEM PRESET TO CHANGE']]={name:o['PRESET NAME'].trim(),mode:m,ch:o.CHANNEL||o['HOP CHANNEL']||o['ASSOC SELF ADDRESS']||o['3G NET'],mdm:o['MODEM PRESET'],enc:o['ENCRYPTION TYPE'],key:o['ENCRYPTION KEY']||'',ptv:o['PT VOICE MODE'],ctv:o['CT VOICE MODE']};backTo('ppreset')})()}
 // ----- PGM>MODE>ALE -----
 function alePgm(){return hm('pale','PGM>MODE>ALE',['CHAN GROUP','ADDRESS','CONFIG','LQA','AMD'],v=>{const A=R.ale;
  if(v==='CHAN GROUP')return push(hm('cgrp','CHAN GROUP',['ADD','REVIEW','DELETE'],x=>{
